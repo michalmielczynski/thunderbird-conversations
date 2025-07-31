@@ -445,52 +445,6 @@ export class MessageIFrame extends React.Component {
     );
   }
 
-  tweakFonts(iframeDoc) {
-    if (!this.props.prefs.tweakBodies) {
-      return [];
-    }
-
-    let textSize = Math.round(
-      this.props.defaultFontSize * this.props.tenPxFactor * 1.2
-    );
-
-    // Assuming 16px is the default (like on, say, Linux), this gives
-    //  18px and 12px, which is what Andy had in mind.
-    // We're applying the style at the beginning of the <head> tag and
-    //  on the body element so that it can be easily overridden by the
-    //  html.
-    // This is for HTML messages only.
-    let styleRules = [];
-    if (
-      iframeDoc.querySelectorAll(":not(.mimemail-body) > .moz-text-html").length
-    ) {
-      styleRules = [
-        "body, table {",
-        // "  line-height: 112.5%;",
-        "  font-size: " + textSize + "px;",
-        "}",
-      ];
-    }
-
-    // Do some reformatting + deal with people who have bad taste. All these
-    // rules are important: some people just send messages with horrible colors,
-    // which ruins the conversation view. Gecko tends to automatically add
-    // padding/margin to html mails. We still want to honor these prefs but
-    // usually they just black/white so this is pretty much what we want.
-    let fg = this.props.browserForegroundColor;
-    let bg = this.props.browserBackgroundColor;
-    styleRules = styleRules.concat([
-      "body {",
-      "  margin: 0; padding: 0;",
-      "}",
-      "body:has(> .moz-text-html) {",
-      "  color: " + fg + "; background-color: " + bg + ";",
-      "}",
-    ]);
-
-    return styleRules;
-  }
-
   async detectQuotes(iframe) {
     // Launch various crappy pieces of code heuristics to
     // convert most common quoting styles to real blockquotes. Spoiler:
@@ -536,9 +490,7 @@ export class MessageIFrame extends React.Component {
             hideText: browser.i18n.getMessage("messageBody.hideQuotedText"),
             showText: browser.i18n.getMessage("messageBody.showQuotedText"),
             linkClass: "showhidequote",
-            smallSize: this.props.prefs.tweakChrome
-              ? this.props.defaultFontSize * this.props.tenPxFactor * 1.1
-              : Math.round((100 * this.props.defaultFontSize * 11) / 12) / 100,
+            smallSize: Math.round((100 * this.props.defaultFontSize * 11) / 12) / 100,
             linkColor: "orange",
             onToggle: toggleCallbackFactory(iframe),
           });
@@ -563,9 +515,7 @@ export class MessageIFrame extends React.Component {
         hideText: browser.i18n.getMessage("messageBody.hideSigText"),
         showText: browser.i18n.getMessage("messageBody.showSigText"),
         linkClass: "showhidesig",
-        smallSize: this.props.prefs.tweakChrome
-          ? this.props.defaultFontSize * this.props.tenPxFactor * 1.1
-          : Math.round((100 * this.props.defaultFontSize * 11) / 12) / 100,
+        smallSize: Math.round((100 * this.props.defaultFontSize * 11) / 12) / 100,
         linkColor: "rgb(56, 117, 215)",
         onToggle: toggleCallbackFactory(iframe),
       });
@@ -611,7 +561,8 @@ export class MessageIFrame extends React.Component {
       return;
     }
     const iframeDoc = this.iframe.contentDocument;
-    let styleRules = this.tweakFonts(iframeDoc);
+    // Use native Thunderbird styling - no font tweaking
+    let styleRules = [];
     if (
       !(this.props.realFrom && this.props.realFrom.includes("bugzilla-daemon"))
     ) {

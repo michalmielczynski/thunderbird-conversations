@@ -45,7 +45,6 @@ function _MessageList({ dispatch, messages, summary }) {
           defaultFontSize: summary.defaultFontSize,
           dispatch,
           displayingMultipleMsgs: !!messages.length,
-          hideQuickReply: summary.prefs.hideQuickReply,
           iframesLoading: summary.iframesLoading,
           index,
           isInTab: summary.isInTab,

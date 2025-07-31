@@ -79,22 +79,6 @@ const PREFS_INFO = [
   },
   {
     props: {
-      title: "options.tweak_chrome_title",
-      desc: "options.tweak_chrome_desc",
-      name: "tweak_chrome",
-    },
-    component: BinaryOption,
-  },
-  {
-    props: {
-      title: "options.tweak_bodies_title",
-      desc: "options.tweak_bodies_desc",
-      name: "tweak_bodies",
-    },
-    component: BinaryOption,
-  },
-  {
-    props: {
       title: "options.operate_on_conversations_title",
       desc: "options.operate_on_conversations_desc",
       name: "operate_on_conversations",
@@ -106,14 +90,6 @@ const PREFS_INFO = [
       title: "options.extra_attachments_title",
       desc: "options.extra_attachments_desc",
       name: "extra_attachments",
-    },
-    component: BinaryOption,
-  },
-  {
-    props: {
-      title: "options.hide_quick_reply_title",
-      desc: "options.hide_quick_reply_desc",
-      name: "hide_quick_reply",
     },
     component: BinaryOption,
   },

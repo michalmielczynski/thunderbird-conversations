@@ -457,15 +457,12 @@ async function setupUserPreferences(dispatch, getState) {
         // Default is expand auto.
         expandWho: newPrefs.preferences?.expand_who ?? 4,
         extraAttachments: newPrefs.preferences?.extra_attachments ?? false,
-        hideQuickReply: newPrefs.preferences?.hide_quick_reply ?? false,
         hideQuoteLength: newPrefs.preferences?.hide_quote_length ?? 5,
         hideSigs: newPrefs.preferences?.hide_sigs ?? false,
         loggingEnabled: newPrefs.preferences?.logging_enabled ?? false,
         noFriendlyDate: newPrefs.preferences?.no_friendly_date ?? false,
         operateOnConversations:
           newPrefs.preferences?.operate_on_conversations ?? false,
-        tweakBodies: newPrefs.preferences?.tweak_bodies ?? true,
-        tweakChrome: newPrefs.preferences?.tweak_chrome ?? true,
       })
     );
   }

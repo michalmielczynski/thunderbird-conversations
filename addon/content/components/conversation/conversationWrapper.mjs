@@ -19,8 +19,6 @@ class _ConversationWrapper extends React.PureComponent {
   }
 
   componentDidMount() {
-    this._setHTMLAttributes();
-
     // When moving to a WebExtension page this can simply be moved to CSS (see
     // https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Internationalization).
     document.documentElement.setAttribute(
@@ -30,24 +28,12 @@ class _ConversationWrapper extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    this._setHTMLAttributes(prevProps);
-  }
-
-  _setHTMLAttributes(prevProps) {
-    if (
-      prevProps &&
-      this.props.OS == prevProps.OS &&
-      this.props.tweakChrome == prevProps.tweakChrome
-    ) {
-      return;
-    }
-
-    const html = document.body.parentNode;
-    if (this.props.tweakChrome && this.props.OS) {
-      html.setAttribute("os", this.props.OS);
-    } else {
-      html.removeAttribute("os");
-    }
+    // When moving to a WebExtension page this can simply be moved to CSS (see
+    // https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Internationalization).
+    document.documentElement.setAttribute(
+      "dir",
+      browser.i18n.getMessage("@@bidi_dir")
+    );
   }
 
   render() {
@@ -72,14 +58,10 @@ class _ConversationWrapper extends React.PureComponent {
 _ConversationWrapper.propTypes = {
   dispatch: PropTypes.func.isRequired,
   messageNotFound: PropTypes.bool.isRequired,
-  tweakChrome: PropTypes.bool.isRequired,
-  OS: PropTypes.string,
 };
 
 export const ConversationWrapper = ReactRedux.connect((state) => {
   return {
     messageNotFound: state.summary.messageNotFound,
-    tweakChrome: !!state.summary.prefs && state.summary.prefs.tweakChrome,
-    OS: state.summary.OS,
   };
 })(_ConversationWrapper);

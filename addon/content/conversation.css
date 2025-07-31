@@ -3,17 +3,23 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 :root {
-  --application-background-color: light-dark(white, rgb(56, 56, 61));
-  --application-foreground-color: light-dark(black, rgb(249, 249, 250));
-  --dull-foreground-color: light-dark(#666, #999);
-  --email-address-dull-color: light-dark(#888a85, #b6b6b6);
-  --notification-bar-background-color: light-dark(
-    rgb(204, 255, 255),
-    rgb(6, 8, 145)
-  );
-  --notification-bar-foreground-color: light-dark(black, white);
+  /* Native Thunderbird 140 color system */
+  --layout-background-0: light-dark(#ffffff, #2a2a2e);
+  --layout-background-1: light-dark(#f5f5f5, #38383d);
+  --layout-background-2: light-dark(#eeeeee, #42424f);
+  --layout-color-1: light-dark(#0c0c0d, #f9f9fa);
+  --layout-color-2: light-dark(#4a4a4f, #b1b1b3);
+  --layout-border-0: light-dark(#d7d7db, #52525e);
+  --selected-item-color: light-dark(#0060df, #0a84ff);
+  --selected-item-text-color: light-dark(#ffffff, #ffffff);
+  
+  /* Native spacing and typography */
+  --message-spacing: 0;
+  --message-padding: 12px 16px;
+  --border-radius: 0;
+  --native-font: -moz-default;
+  
   color-scheme: light dark;
-  --border-color: #e3e3e3;
 }
 
 * {
@@ -30,28 +36,18 @@
 }
 
 body {
-  font-family: sans-serif;
-  font-size: 1.2rem;
-  line-height: 1.8rem;
+  font: message-box;
+  font-size: 1rem;
+  line-height: 1.4;
   margin: 0;
   padding: 0;
-  overflow-y: scroll;
+  background-color: var(--layout-background-0);
+  color: var(--layout-color-1);
+  font-family: -moz-default;
 }
 
 html {
-  font-size: 83.3%;
-}
-
-html[os="win"] {
-  font-size: 70%;
-}
-
-html[os="mac"] {
-  font-size: 66.6%;
-}
-
-html[os="linux"] {
-  font-size: 62.5%;
+  font-size: 100%;
 }
 
 p {
@@ -100,13 +96,30 @@ a img {
 }
 
 .icon-link {
-  display: inline-block;
-  color: var(--dull-foreground-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--layout-color-2);
+  padding: 6px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 32px;
+  min-height: 32px;
 }
 
 .icon-link:focus,
 .icon-link:hover {
-  color: -moz-CellHighlight;
+  color: var(--layout-color-1);
+  background-color: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.08));
+  transform: translateY(-1px);
+}
+
+.icon-link:active {
+  transform: translateY(0);
+  background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.12));
 }
 
 .link:hover,
@@ -116,6 +129,7 @@ a img {
 
 #conversationWrapper {
   position: relative;
+  background-color: var(--layout-background-0);
 }
 
 .conversationHeaderWrapper {
@@ -128,35 +142,37 @@ a img {
 }
 
 .conversationHeader {
-  padding: 5px 10px;
-  background-color: Menu;
-  border-bottom: 1px solid var(--border-color);
-  color: MenuText;
+  padding: 8px 12px;
+  background-color: var(--layout-background-1);
+  border-bottom: 1px solid var(--layout-border-0);
+  color: var(--layout-color-1);
   display: flex;
   flex-direction: row;
 }
 
 .subject {
-  font-size: 1.2rem;
-  font-weight: bold;
-  line-height: 2.2rem;
-  height: 2.2rem;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  height: auto;
+  overflow: visible;
+  white-space: normal;
+  text-overflow: clip;
   flex: 1;
 }
 
 .actions button {
-  min-width: 30px;
+  min-width: 24px;
   text-align: center;
-  height: 24px;
-  margin: 0 0 0 3px;
-  color: var(--dull-foreground-color);
+  height: 20px;
+  margin: 0 0 0 2px;
+  color: var(--layout-color-2);
+  background: transparent;
+  border: none;
 }
 
 .actions .unread {
-  color: #3079e0;
+  color: var(--selected-item-color);
 }
 
 .actions .expand {
@@ -174,20 +190,28 @@ a img {
 }
 
 #messageList {
-  margin-top: 10px;
+  margin: 0;
+  padding: 0;
+  background-color: var(--layout-background-0);
 }
 
 .message {
-  margin: 0 10px 1px;
-  border: 1px solid var(--border-color);
+  margin: 0;
+  border: none;
+  border-radius: 0;
   list-style-type: none;
+  background: var(--layout-background-0);
+  transition: background-color 0.1s ease;
+  overflow: visible;
+}
+
+.message:hover {
+  background: var(--layout-background-1);
 }
 
 .message:focus {
-  border: 1px solid var(--border-color);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
-  /* force shadow to the front */
-  position: relative;
+  background: var(--layout-background-1);
+  outline: none;
 }
 
 .message:focus:-moz-focusring {
@@ -195,12 +219,17 @@ a img {
 }
 
 .messageHeader {
-  margin: 0 0 5px;
-  padding: 0 10px;
-  line-height: 3;
+  margin: 0;
+  padding: var(--message-padding);
+  line-height: 1.4;
   cursor: pointer;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-bottom: 1px solid var(--layout-background-1);
+  background: var(--layout-background-0);
 }
 
 .mainActionButton > .icon-link,
@@ -209,18 +238,33 @@ a img {
 .details-hidden > .icon-link,
 .invert-colors > .icon-link,
 .optionsButton {
-  background: none;
-  border: 0;
+  color: var(--layout-color-2);
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  padding: 4px;
+  border-radius: 8px;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.options:hover {
+  background-color: light-dark(rgba(0, 0, 0, 0.02), rgba(255, 255, 255, 0.02));
 }
 
 .author {
-  font-weight: bold;
-  margin-inline-end: 0.3rem;
+  font-weight: 500;
+  margin-inline-end: 0.5rem;
+  color: var(--layout-color-1);
+  font-size: 1rem;
 }
 
 .to,
 .bzTo {
-  color: var(--email-address-dull-color);
+  color: var(--layout-color-2);
 }
 
 /* That's what makes the ellipsis appear */
@@ -234,14 +278,19 @@ a img {
 
 .tooltip {
   position: absolute;
-  min-width: 30.2rem;
-  max-width: 45rem;
-  background-color: -moz-Field;
-  color: -moz-FieldText;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+  min-width: 12rem;
+  max-width: 20rem;
+  background-color: var(--layout-background-0);
+  color: var(--layout-color-1);
+  border: 1px solid light-dark(rgba(0, 0, 0, 0.12), rgba(255, 255, 255, 0.12));
+  border-radius: 8px;
+  box-shadow: 
+    0 4px 16px light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.24)),
+    0 2px 4px light-dark(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.16));
   z-index: 1000;
-  line-height: 1.8;
+  line-height: 1.4;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 html[dir="rtl"] .tooltip {
@@ -273,23 +322,37 @@ html[dir="rtl"] .tooltip {
   width: 100%;
   height: 100%;
   text-align: start;
-  padding: 3px 5px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--layout-color-1);
+  border-radius: 6px;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.dropDown > .tooltip-menu button:hover,
+.attachmentsDropDown > .tooltip-menu button:hover {
+  background-color: light-dark(rgba(0, 120, 212, 0.08), rgba(0, 120, 212, 0.12));
 }
 
 .dropDown .tooltip {
-  min-width: 15.2em;
+  min-width: 12rem;
   left: auto;
   right: -0.2em;
-  line-height: 1.8;
+  line-height: 1.4;
+  padding: 6px;
 }
 
 .attachmentsDropDown > .tooltip {
-  min-width: 15.2em;
-  font-size: 1.2rem;
+  min-width: 12rem;
+  font-size: 1rem;
   left: 0;
   right: auto;
   top: 2.5rem;
-  line-height: 1.8;
+  line-height: 1.4;
+  padding: 6px;
 }
 
 html[dir="rtl"] .dropDown .tooltip {
@@ -304,14 +367,16 @@ html[dir="rtl"] .attachmentsDropDown .tooltip {
 
 .dropDown ul,
 .attachmentsDropDown ul {
-  margin-top: 0;
+  margin: 0;
+  padding: 0;
   list-style-type: none;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
 }
 
 .dropDown li,
 .attachmentsDropDown li {
   white-space: nowrap;
+  margin: 0;
 }
 
 .dropDown li:hover,
@@ -322,28 +387,22 @@ html[dir="rtl"] .attachmentsDropDown .tooltip {
 .attachmentsDropDown li:focus,
 .dropDown li:nth-child(2n):focus,
 .attachmentsDropDown li:nth-child(2n):focus {
-  background-color: -moz-CellHighlight;
-  color: -moz-CellHighlightText;
+  background-color: light-dark(rgba(0, 120, 212, 0.08), rgba(0, 120, 212, 0.12));
+  color: var(--layout-color-1);
 }
 
 .dropDown li:nth-child(2n),
 .attachmentsDropDown li:nth-child(2n) {
-  background-color: -moz-OddTreeRow;
+  background-color: transparent;
 }
 
 .dropdown-sep {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08));
+  margin: 4px 0;
 }
 
 .arrow {
-  border-color: transparent transparent var(--border-color) transparent;
-  border-style: solid;
-  border-width: 7px;
-  height: 0;
-  left: 10px;
-  top: -15px;
-  position: absolute;
-  width: 0;
+  display: none; /* Hide the ugly arrow - modern dropdowns don't need them */
 }
 
 html[dir="rtl"] .arrow {
@@ -387,19 +446,27 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 
 .contactInitials,
 .contactAvatar {
-  display: inline-block;
-  line-height: 2.4;
-  min-width: 2.4em;
-  border-radius: 1.2em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
   text-align: center;
-  color: #fff;
+  color: light-dark(#6b7280, #9ca3af);
+  background: light-dark(#f1f3f4, #343842);
   background-size: cover;
   background-position: center;
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0;
 }
 
 .smallEmail {
-  font-size: 85%;
-  color: var(--email-address-dull-color);
+  font-size: 0.9rem;
+  color: var(--layout-color-2);
   font-weight: normal;
 }
 
@@ -432,9 +499,9 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 .authorEmail {
   display: flex;
   width: 100%;
-  color: var(--email-address-dull-color);
+  color: var(--layout-color-2);
   overflow: hidden;
-  padding-top: 3px;
+  padding-top: 2px;
 }
 
 .authorEmailAddress {
@@ -480,15 +547,21 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 }
 
 .snippet {
-  color: var(--email-address-dull-color);
+  color: var(--layout-color-2);
 }
 
 .message .messageBody {
-  padding: 0 10px;
+  padding: 0 var(--message-padding);
+  padding-top: 0;
+  padding-bottom: 16px;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--layout-color-1);
+  background: var(--layout-background-0);
 }
 
 .message.with-details .messageBody {
-  padding-top: 10px;
+  padding-top: 8px;
 }
 
 .message iframe {
@@ -550,7 +623,8 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 }
 
 .tags.special-tags li {
-  background-color: #3f5381;
+  background-color: light-dark(#e1e7f0, #4a5568);
+  color: light-dark(#4a5568, #e2e8f0);
 }
 
 .tags li.can-click {
@@ -574,13 +648,11 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 }
 
 .notificationBar {
-  padding: 10px;
-  margin: 0 0 10px 0;
-  border-width: 1px 0;
-  border-style: solid;
-  border-color: var(--border-color);
-  background-color: var(--notification-bar-background-color);
-  color: var(--notification-bar-foreground-color);
+  padding: 8px 12px;
+  margin: 0;
+  border: none;
+  background-color: var(--layout-background-1);
+  color: var(--layout-color-1);
 }
 
 .openpgpBar {
@@ -617,13 +689,13 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 }
 
 .detailsLine {
-  font-size: 1.1rem;
-  padding: 0 10px;
-  color: var(--email-address-dull-color);
+  font-size: 0.9rem;
+  padding: 0 var(--message-padding);
+  color: var(--layout-color-2);
 }
 
 .attachmentIcon {
-  color: var(--dull-foreground-color);
+  color: var(--layout-color-2);
 }
 
 .attachmentIcon .icon {
@@ -720,19 +792,19 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 }
 
 .footerActions button {
-  font-size: 120%;
+  font-size: 100%;
   background: none;
   border: 0;
-  color: var(--dull-foreground-color);
+  color: var(--layout-color-2);
   width: 2em;
   height: 2em;
-  border-radius: 1em;
+  border-radius: 0;
   cursor: pointer;
 }
 
 .footerActions button:hover,
 .footerActions button:focus {
-  color: -moz-CellHighlight;
+  color: var(--selected-item-color);
 }
 
 .messageFooter.hide .footerActions {
@@ -751,29 +823,6 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   visibility: hidden;
 }
 
-.star {
-  display: inline;
-  margin-inline-end: 3px;
-  color: var(--email-address-dull-color);
-  font-size: 80%;
-  border: none !important;
-  background: transparent;
-}
-
-.star .icon {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-}
-
-.star.starred {
-  color: #fcb040;
-}
-.star.starred .icon {
-  fill: currentColor;
-  stroke: currentColor;
-}
-
 /* bottom links: forward this conversation, print this conversation */
 .bottom-links {
   text-align: end;
@@ -788,15 +837,18 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 
 /* General pills */
 .special-tag.success {
-  background-color: #68ab57 !important;
+  background-color: light-dark(#d1fae5, #065f46) !important;
+  color: light-dark(#065f46, #d1fae5) !important;
 }
 
 .special-tag.warning {
-  background-color: orange !important;
+  background-color: light-dark(#fef3c7, #92400e) !important;
+  color: light-dark(#92400e, #fef3c7) !important;
 }
 
 .special-tag.error {
-  background-color: red !important;
+  background-color: light-dark(#fee2e2, #991b1b) !important;
+  color: light-dark(#991b1b, #fee2e2) !important;
 }
 
 .special-tag-ext-icon {

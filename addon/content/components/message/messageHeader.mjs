@@ -8,7 +8,6 @@ import { ContactDetail } from "../contactDetail.mjs";
 import { messageActions } from "../../reducer/reducerMessages.mjs";
 import { MessageHeaderOptions } from "./messageHeaderOptions.mjs";
 import { MessageTags, SpecialMessageTags } from "./messageTags.mjs";
-import { SvgIcon } from "../svgIcon.mjs";
 
 /**
  * Normalize a contact into a string (used for i18n formatting).
@@ -218,18 +217,31 @@ export function ContactLabel({ contact, className, msgId }) {
 }
 
 /**
- * Renders and Avatar icon.
+ * Renders and Avatar icon - uses gentle tints of contact colors.
  *
  * @param {object} props
  * @param {string} [props.url]
  * @param {string} [props.initials]
- * @param {object} [props.style]
+ * @param {object} [props.style] - Contact color style, will be made more gentle
  */
 function Avatar({ url, initials, style }) {
+  // Create a gentle version of the contact color
+  let gentleStyle = {};
+  if (style && style.backgroundColor) {
+    // Convert the color to a more subtle version
+    const originalColor = style.backgroundColor;
+    // Use CSS to make the color more gentle by mixing with background
+    gentleStyle = {
+      backgroundColor: originalColor,
+      opacity: 0.5,
+      backgroundBlendMode: 'multiply'
+    };
+  }
+
   if (!url) {
     return React.createElement(
       "abbr",
-      { className: "contactInitials", style },
+      { className: "contactInitials", style: gentleStyle },
       initials
     );
   }
@@ -299,17 +311,6 @@ export function MessageHeader({
     );
   }
 
-  function onClickStar(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    dispatch(
-      messageActions.setStarred({
-        id,
-        starred: !starred,
-      })
-    );
-  }
-
   // TODO: Maybe insert this after contacts but before snippet:
   // <span class="bzTo"> {{str "message.at"}} {{bugzillaUrl}}</span>
 
@@ -350,10 +351,6 @@ export function MessageHeader({
     extraContacts = React.createElement(React.Fragment);
   }
 
-  let starTitle = browser.i18n.getMessage(
-    starred ? "message.removeStar.tooltip" : "message.addStar.tooltip"
-  );
-
   return React.createElement(
     "div",
     {
@@ -363,15 +360,7 @@ export function MessageHeader({
     React.createElement(
       "div",
       { className: "shrink-box" },
-      React.createElement(
-        "button",
-        {
-          className: `star ${starred ? "starred" : ""}`,
-          title: starTitle,
-          onClick: onClickStar,
-        },
-        React.createElement(SvgIcon, { ariaHidden: true, hash: "star" })
-      ),
+      // Star button removed for clean interface
       !!from &&
         React.createElement(
           React.Fragment,

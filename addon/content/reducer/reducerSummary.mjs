@@ -28,14 +28,12 @@ export const initialSummary = {
   prefs: {
     expandWho: 4,
     extraAttachments: false,
-    hideQuickReply: false,
+    hideQuickReply: true,
     hideQuoteLength: 5,
     hideSigs: false,
     loggingEnabled: false,
     noFriendlyDate: false,
     operateOnConversations: false,
-    tweakBodies: true,
-    tweakChrome: true,
   },
 };
 
