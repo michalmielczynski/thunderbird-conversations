@@ -5,7 +5,6 @@
 import React from "react";
 import { attachmentActions } from "../../reducer/reducerAttachments.mjs";
 import { SvgIcon } from "../svgIcon.mjs";
-import { ActionButton } from "./messageActionButton.mjs";
 
 const ICON_MAPPING = new Map([
   ["application/msword", "x-office-document"],
@@ -36,46 +35,6 @@ const FALLBACK_ICON_MAPPING = new Map([
 ]);
 
 /**
- * The more menu for attachments
- *
- * @param {object} options
- * @param {() => void} options.detachCallback
- * @param {() => void} options.deleteCallback
- */
-function AttachmentMoreMenu({ detachCallback, deleteCallback }) {
-  return React.createElement(
-    "div",
-    { className: "tooltip tooltip-menu menu" },
-    React.createElement("div", { className: "arrow" }),
-    React.createElement("div", { className: "arrow inside" }),
-    React.createElement(
-      "ul",
-      null,
-      React.createElement(
-        "li",
-        { className: "action-detach" },
-        React.createElement(ActionButton, {
-          callback: detachCallback,
-          className: "optionsButton",
-          showString: true,
-          type: "detachAttachment",
-        })
-      ),
-      React.createElement(
-        "li",
-        { className: "action-delete" },
-        React.createElement(ActionButton, {
-          callback: deleteCallback,
-          className: "optionsButton",
-          showString: true,
-          type: "deleteAttachment",
-        })
-      )
-    )
-  );
-}
-
-/**
  * Handles display of an individual attachment.
  *
  * @param {object} options
@@ -98,7 +57,7 @@ function Attachment({
   partName,
   id,
 }) {
-  let [displayMenu, setDisplayMenu] = React.useState(false);
+
 
   function preview() {
     dispatch(
@@ -146,64 +105,7 @@ function Attachment({
     );
   }
 
-  function openAttachment() {
-    dispatch(
-      attachmentActions.openAttachment({
-        id,
-        partName,
-      })
-    );
-  }
 
-  function detachAttachment() {
-    dispatch(
-      attachmentActions.detachAttachment({
-        id,
-        partName,
-        shouldSave: true,
-      })
-    );
-  }
-
-  function deleteAttachment() {
-    dispatch(
-      attachmentActions.detachAttachment({
-        id,
-        partName,
-        fileName: name,
-        shouldSave: false,
-      })
-    );
-  }
-
-  React.useEffect(() => {
-    function clickOrBlurListener(event) {
-      clearMenu();
-    }
-    function keyListener(event) {
-      if (event.key == "Escape") {
-        clearMenu();
-      }
-    }
-    if (displayMenu) {
-      document.addEventListener("click", clickOrBlurListener);
-      document.addEventListener("keypress", keyListener);
-      document.addEventListener("blur", clickOrBlurListener);
-    }
-    return () => {
-      document.removeEventListener("click", clickOrBlurListener);
-      document.removeEventListener("keypress", keyListener);
-      document.removeEventListener("blur", clickOrBlurListener);
-    };
-  }, [displayMenu]);
-
-  function handleDisplayMenu(event) {
-    setDisplayMenu(!displayMenu);
-  }
-
-  function clearMenu() {
-    setDisplayMenu(false);
-  }
 
   function iconForMimeType(mimeType) {
     if (ICON_MAPPING.has(mimeType)) {
@@ -262,7 +164,7 @@ function Attachment({
         {
           className: "attachmentThumb",
           draggable: "false",
-          onClick: isImage ? preview : openAttachment,
+          onClick: isImage ? preview : null,
         },
         React.createElement("img", {
           className: imgClass,
@@ -279,16 +181,6 @@ function Attachment({
         React.createElement(
           "div",
           { className: "attachActions" },
-          isImage &&
-            React.createElement(
-              "a",
-              {
-                className: "icon-link preview-attachment",
-                title: browser.i18n.getMessage("attachments.preview.tooltip"),
-                onClick: preview,
-              },
-              React.createElement(SvgIcon, { hash: "visibility" })
-            ),
           React.createElement(
             "a",
             {
@@ -297,33 +189,6 @@ function Attachment({
               onClick: downloadAttachment,
             },
             React.createElement(SvgIcon, { hash: "file_download" })
-          ),
-          React.createElement(
-            "a",
-            {
-              className: "icon-link open-attachment",
-              title: browser.i18n.getMessage("attachments.open.tooltip"),
-              onClick: openAttachment,
-            },
-            React.createElement(SvgIcon, { hash: "search" })
-          ),
-          React.createElement(
-            "span",
-            { className: "attachmentsDropDown" },
-            React.createElement(
-              "a",
-              {
-                className: "icon-link more-attachment",
-                title: browser.i18n.getMessage("attachments.moreMenu.tooltip"),
-                onClick: handleDisplayMenu,
-              },
-              React.createElement(SvgIcon, { hash: "more_vert" })
-            ),
-            displayMenu &&
-              React.createElement(AttachmentMoreMenu, {
-                detachCallback: detachAttachment,
-                deleteCallback: deleteAttachment,
-              })
           )
         )
     )
@@ -341,44 +206,9 @@ function Attachment({
  * @param {number} options.id
  */
 export function Attachments({ dispatch, attachments, attachmentsPlural, id }) {
-  function showGalleryView() {
-    dispatch(attachmentActions.showGalleryView({ id }));
-  }
-
-  function downloadAll() {
-    dispatch(attachmentActions.downloadAll({ id }));
-  }
-
-  const showGalleryLink = attachments.some((a) =>
-    a.contentType.startsWith("image/")
-  );
   return React.createElement(
     "ul",
     { className: "attachments" },
-    React.createElement(
-      "div",
-      { className: "attachHeader" },
-      attachmentsPlural,
-      React.createElement(
-        "a",
-        {
-          className: "icon-link download-all",
-          onClick: downloadAll,
-          title: browser.i18n.getMessage("attachments.downloadAll.tooltip"),
-        },
-        React.createElement(SvgIcon, { hash: "file_download" })
-      ),
-      showGalleryLink &&
-        React.createElement(
-          "a",
-          {
-            onClick: showGalleryView,
-            className: "icon-link view-all",
-            title: browser.i18n.getMessage("attachments.gallery.tooltip"),
-          },
-          React.createElement(SvgIcon, { hash: "photo_library" })
-        )
-    ),
     attachments.map((attachment) =>
       React.createElement(Attachment, {
         anchor: attachment.anchor,

@@ -66,11 +66,24 @@
 - Uses Thunderbird's standard padding and margins
 - Matches Thunderbird 140's color variables
 
+### 11. **Minimalist Attachment Display**
+
+- **Removed Attachment Info Header**: Eliminated the "X attachments" info line with horizontal separator
+- **Removed Three-Dots Menu**: Completely removed the more actions menu from message headers
+- **Streamlined Actions**: Only the download icon remains as an action for attachments
+- **Compact Icon Sizing**: Reduced attachment icons to 16px for cleaner display
+- **Clean Thumbnail View**: Removed action overlay icons (preview, open, menu) from attachment thumbnails
+- **Simplified UI**: Only filename, file size, and download action are visible
+- **Code Cleanup**: Removed unused functions (`detachAttachment`, `deleteAttachment`, `handleDisplayMenu`)
+- **Component Removal**: Deleted `AttachmentMoreMenu` component and related state management
+
 ## 📁 Key Modified Files
 
 - `addon/content/conversation.css` - Main stylesheet overhauled
 - `addon/content/components/message/messageHeader.mjs` - Star removal, avatar simplification
 - `addon/content/components/message/message.mjs` - Footer and QuickReply removal
+- `addon/content/components/message/attachments.mjs` - Simplified attachment actions and UI
+- `addon/content/components/message/messageHeaderOptions.mjs` - Three-dots menu removal
 - `addon/content/reducer/reducerSummary.mjs` - State defaults simplified
 - `addon/background/prefs.mjs` - Default preferences cleaned up
 
