@@ -223,20 +223,14 @@ a img {
 }
 
 .message:hover {
-  background-color: light-dark(#fafbfc, #353540);
-  border-color: light-dark(rgba(0, 0, 0, 0.12), rgba(255, 255, 255, 0.15));
-  box-shadow: 0 2px 6px light-dark(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.18));
-  transform: translateY(-1px);
+  background-color: var(--system-accent-subtle);
+  border-color: var(--system-accent-border);
 }
 
 .message:focus {
-  background-color: light-dark(#f8fafc, #3a3a47);
-  border-color: light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.1));
-  box-shadow: 
-    0 0 0 1px var(--system-accent-color),
-    0 3px 8px light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.25));
+  background-color: var(--system-accent-subtle);
+  border-color: var(--system-accent-color);
   outline: none;
-  transform: translateY(-1px);
 }
 
 .message:focus:-moz-focusring {
@@ -265,6 +259,16 @@ a img {
 .messageHeader:hover {
   background-color: light-dark(rgba(0, 0, 0, 0.035), rgba(255, 255, 255, 0.05));
   border-bottom-color: var(--system-accent-subtle);
+}
+
+/* For collapsed messages (not expanded), round all corners and remove border-bottom */
+.message:not(:has(.messageHeader.expanded)) .messageHeader {
+  border-radius: 6px;
+  border-bottom: none;
+}
+
+.message:not(:has(.messageHeader.expanded)) .messageHeader:hover {
+  border-bottom: none;
 }
 
 .mainActionButton > .icon-link,
@@ -661,6 +665,11 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   color: var(--layout-color-1);
   background: var(--layout-background-0);
   border-radius: 0 0 6px 6px;
+}
+
+/* Hide messageBody for collapsed messages */
+.message:not(:has(.messageHeader.expanded)) .messageBody {
+  display: none;
 }
 
 .message.with-details .messageBody {
