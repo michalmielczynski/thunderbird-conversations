@@ -38,16 +38,18 @@
 - Cleaned up all `.messageFooter`, `.footerActions`, and `.bottom-links` CSS
 - Updated TypeScript config and component imports
 
-### 8. **Enhanced Conversation List with Refined Modern Design**
+### 8. **Enhanced Conversation List with Native Thunderbird Aesthetic**
 
-- **Subtle Visual Enhancements**: Clean borders and gentle backgrounds without overwhelming gradients
-- **Improved Message Cards**: Rounded corners with subtle shadows and refined hover states  
-- **Enhanced Visual Hierarchy**: Better element distinction through tasteful background accents
-- **Modern Interactive Elements**: Author names, dates, and recipients with subtle highlighting
-- **Refined Avatar Design**: Clean solid color avatars with gentle hover scaling
-- **Polished Typography**: Improved readability with understated visual accents
-- **Smooth Micro-interactions**: Gentle transitions that enhance usability without distraction
-- **Light/Dark Theme Harmony**: Consistent styling that respects both color schemes
+- **Thunderbird-Inspired Design**: Clean, card-based layout matching the beautiful native Thunderbird message list
+- **Refined Spacing**: Proper message separation (4px between cards) with generous padding (8px around list)
+- **Native Card Styling**: Subtle borders and shadows that feel integrated with Thunderbird's design language
+- **Elegant Focus States**: System accent color highlighting with smooth lift animations on hover/focus
+- **Clean Typography**: Simplified author/recipient styling without background pills for better readability
+- **Integrated Options**: Transparent option controls that appear naturally on hover without visual clutter
+- **Subtle Headers**: Slightly tinted message headers to distinguish from content while maintaining cleanliness
+- **Natural Snippets**: Clean preview text without borders or backgrounds for seamless integration
+- **Modern Transitions**: Smooth cubic-bezier animations with 200ms timing for polished interactions
+- **System Integration**: Leverages system accent colors for native platform feel
 
 ### 9. **System Accent Color Integration**
 
