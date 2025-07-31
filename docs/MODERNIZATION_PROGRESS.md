@@ -77,6 +77,14 @@
 - **Code Cleanup**: Removed unused functions (`detachAttachment`, `deleteAttachment`, `handleDisplayMenu`)
 - **Component Removal**: Deleted `AttachmentMoreMenu` component and related state management
 
+### 12. **Extension Identity Update**
+
+- **Unique Add-on ID**: Changed from `gconversation@xulforum.org` to `thunderbird-conversations-modernized@michalmielczynski.dev`
+- **Updated Name**: Extension now called "Thunderbird Conversations (Modernized)"
+- **New Description**: "A modernized conversation view for Thunderbird with native styling and streamlined interface!"
+- **Updated Homepage**: Points to fork repository at `https://github.com/michalmielczynski/thunderbird-conversations`
+- **Author Attribution**: Credits both original author and modernization work
+
 ## 📁 Key Modified Files
 
 - `addon/content/conversation.css` - Main stylesheet overhauled

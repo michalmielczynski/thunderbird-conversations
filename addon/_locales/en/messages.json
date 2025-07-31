@@ -1,11 +1,11 @@
 {
   "extensionName": {
-    "message": "Thunderbird Conversations",
+    "message": "Thunderbird Conversations (Modernized)",
     "description": "Name of the extension."
   },
 
   "extensionDescription": {
-    "message": "Brings a conversation view to a Thunderbird near you!",
+    "message": "A modernized conversation view for Thunderbird with native styling and streamlined interface!",
     "description": "Description of the extension."
   },
 
