@@ -278,6 +278,7 @@ function Avatar({ url, initials, style }) {
  * @param {string} props.snippet
  * @param {boolean} props.starred
  * @param {object[]} props.tags
+ * @param {object[]} props.specialTags
  * @param {object[]} props.to
  */
 export function MessageHeader({
@@ -300,6 +301,7 @@ export function MessageHeader({
   shortFolderName,
   snippet,
   tags,
+  specialTags,
   to,
 }) {
   function onClickHeader() {
@@ -378,37 +380,37 @@ export function MessageHeader({
           })
         ),
       extraContacts,
-      !expanded &&
-        React.createElement(
-          "span",
-          { className: "snippet" },
-          React.createElement(MessageTags, {
-            onTagsChange: (newTags) => {
-              dispatch(
-                messageActions.setTags({
-                  id,
-                  tags: newTags,
-                })
-              );
-            },
-            expanded: false,
-            tags,
-          }),
-          React.createElement(SpecialMessageTags, {
-            onTagClick: (event, tag) => {
-              dispatch(
-                messageActions.tagClick({
-                  event,
-                  id,
-                  details: tag.details,
-                })
-              );
-            },
-            folderName: shortFolderName,
-            inView,
-          }),
-          snippet
-        )
+      React.createElement(
+        "span",
+        { className: "snippet" },
+        React.createElement(MessageTags, {
+          onTagsChange: (newTags) => {
+            dispatch(
+              messageActions.setTags({
+                id,
+                tags: newTags,
+              })
+            );
+          },
+          expanded: false,
+          tags,
+        }),
+        React.createElement(SpecialMessageTags, {
+          onTagClick: (event, tag) => {
+            dispatch(
+              messageActions.tagClick({
+                event,
+                id,
+                details: tag.details,
+              })
+            );
+          },
+          folderName: shortFolderName,
+          inView,
+          specialTags,
+        }),
+        !expanded && snippet
+      )
     ),
     React.createElement(MessageHeaderOptions, {
       dispatch,

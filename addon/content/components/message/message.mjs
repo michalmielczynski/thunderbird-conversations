@@ -10,7 +10,7 @@ import { MessageDetails } from "./messageDetails.mjs";
 import { MessageHeader } from "./messageHeader.mjs";
 import { MessageIFrame } from "./messageIFrame.mjs";
 import { MessageNotification } from "./messageNotification.mjs";
-import { MessageTags, SpecialMessageTags } from "./messageTags.mjs";
+// Removed MessageTags and SpecialMessageTags imports - tags now only rendered in header
 
 function isAccel(event) {
   if (window.navigator.platform.includes("Mac")) {
@@ -350,6 +350,7 @@ export class Message extends React.PureComponent {
         snippet: this.props.message.snippet,
         starred: this.props.message.starred,
         tags: this.props.message.tags,
+        specialTags: this.props.message.specialTags,
       }),
       this.props.message.expanded &&
         this.props.message.detailsShowing &&
@@ -377,41 +378,6 @@ export class Message extends React.PureComponent {
       React.createElement(
         "div",
         { className: "messageBody" },
-        this.props.message.expanded &&
-          React.createElement(SpecialMessageTags, {
-            onFolderClick: () => {
-              this.props.dispatch(
-                messageActions.switchToFolderAndMsg({
-                  id: this.props.message.id,
-                })
-              );
-            },
-            onTagClick: (event, tag) => {
-              this.props.dispatch(
-                messageActions.tagClick({
-                  event,
-                  id: this.props.message.id,
-                  details: tag.details,
-                })
-              );
-            },
-            folderName: this.props.message.folderName,
-            inView: this.props.message.inView,
-            specialTags: this.props.message.specialTags,
-          }),
-        this.props.message.expanded &&
-          React.createElement(MessageTags, {
-            onTagsChange: (tags) => {
-              this.props.dispatch(
-                messageActions.setTags({
-                  id: this.props.message.id,
-                  tags,
-                })
-              );
-            },
-            expanded: true,
-            tags: this.props.message.tags,
-          }),
         this.props.message.expanded &&
           this.props.message.printBody &&
           React.createElement(
