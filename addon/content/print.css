@@ -11,7 +11,6 @@
   white-space: pre-wrap;
 }
 
-.messageFooter,
 .actions {
   display: none;
 }
@@ -24,8 +23,4 @@
 
 #messageList {
   margin-top: 1em;
-}
-
-.quickReply {
-  display: none;
 }

@@ -7,12 +7,10 @@ import PropTypes from "prop-types";
 import { Attachments } from "./attachments.mjs";
 import { messageActions } from "../../reducer/reducerMessages.mjs";
 import { MessageDetails } from "./messageDetails.mjs";
-import { MessageFooter } from "./messageFooter.mjs";
 import { MessageHeader } from "./messageHeader.mjs";
 import { MessageIFrame } from "./messageIFrame.mjs";
 import { MessageNotification } from "./messageNotification.mjs";
 import { MessageTags, SpecialMessageTags } from "./messageTags.mjs";
-import { QuickReply } from "../quickreply/quickReply.mjs";
 
 function isAccel(event) {
   if (window.navigator.platform.includes("Mac")) {
@@ -452,23 +450,7 @@ export class Message extends React.PureComponent {
             attachmentsPlural: this.props.message.attachmentsPlural,
             id: this.props.message.id,
           })
-      ),
-      this.props.message.expanded &&
-        React.createElement(MessageFooter, {
-          dispatch: this.props.dispatch,
-          id: this.props.message.id,
-          multipleRecipients: this.props.message.multipleRecipients,
-          recipientsIncludeLists: this.props.message.recipientsIncludeLists,
-          isDraft: this.props.message.isDraft,
-        }),
-      this.props.isLastMessage &&
-        this.props.message.expanded &&
-        !this.props.hideQuickReply &&
-        React.createElement(QuickReply, {
-          id: this.props.message.id,
-          multipleRecipients: this.props.message.multipleRecipients,
-          recipientsIncludeLists: this.props.message.recipientsIncludeLists,
-        })
+      )
     );
   }
 }
@@ -485,7 +467,6 @@ Message.propTypes = {
   isInTab: PropTypes.bool.isRequired,
   isLastMessage: PropTypes.bool.isRequired,
   isStandalone: PropTypes.bool.isRequired,
-  hideQuickReply: PropTypes.bool.isRequired,
   message: PropTypes.object.isRequired,
   tenPxFactor: PropTypes.number.isRequired,
   prefs: PropTypes.object.isRequired,

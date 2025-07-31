@@ -5,7 +5,6 @@
 import React from "react";
 import * as ReactRedux from "react-redux";
 import PropTypes from "prop-types";
-import { ConversationFooter } from "./conversationFooter.mjs";
 import { ConversationHeader } from "./conversationHeader.mjs";
 import { MessageList } from "../message/messageList.mjs";
 
@@ -49,8 +48,7 @@ class _ConversationWrapper extends React.PureComponent {
       null,
       React.createElement("div", { id: "popup-container" }),
       React.createElement(ConversationHeader),
-      React.createElement(MessageList),
-      React.createElement(ConversationFooter)
+      React.createElement(MessageList)
     );
   }
 }
