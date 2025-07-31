@@ -84,8 +84,13 @@
 - **New Description**: "A modernized conversation view for Thunderbird with native styling and streamlined interface!"
 - **Updated Homepage**: Points to fork repository at `https://github.com/michalmielczynski/thunderbird-conversations`
 - **Author Attribution**: Credits both original author and modernization work
+- **README Overhaul**: Clear indication this is a modernized fork with feature highlights and proper attribution
 
 ## 📁 Key Modified Files
+
+- `README.md` - Complete rewrite highlighting modernization and fork status
+- `addon/manifest.json` - Updated identity, author, and homepage
+- `addon/_locales/en/messages.json` - Updated extension name and description
 
 - `addon/content/conversation.css` - Main stylesheet overhauled
 - `addon/content/components/message/messageHeader.mjs` - Star removal, avatar simplification
