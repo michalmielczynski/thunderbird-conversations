@@ -49,7 +49,16 @@
 - **Smooth Micro-interactions**: Gentle transitions that enhance usability without distraction
 - **Light/Dark Theme Harmony**: Consistent styling that respects both color schemes
 
-### 9. **Native Layout System**
+### 9. **System Accent Color Integration**
+
+- **Dynamic Color Adaptation**: Automatically uses system accent color (e.g., GNOME accent color)
+- **Fallback Support**: Gracefully falls back to blue if system colors unavailable
+- **Live Color Updates**: Changes accent colors when user changes system theme
+- **Cross-Platform Compatibility**: Works with Windows, macOS, and Linux accent colors
+- **Subtle Application**: System colors used tastefully in borders, highlights, and avatars
+- **Modern CSS Features**: Uses `color-mix()` and `AccentColor` with progressive enhancement
+
+### 10. **Native Layout System**
 
 - Flat design: removed card-like elements, shadows, borders
 - Uses Thunderbird's standard padding and margins

@@ -13,6 +13,12 @@
   --selected-item-color: light-dark(#0060df, #0a84ff);
   --selected-item-text-color: light-dark(#ffffff, #ffffff);
   
+  /* System accent color variables with fallbacks */
+  --system-accent-color: light-dark(var(--selected-item-color), var(--selected-item-color));
+  --system-accent-subtle: light-dark(rgba(0, 96, 223, 0.08), rgba(10, 132, 255, 0.12));
+  --system-accent-hover: light-dark(rgba(0, 96, 223, 0.12), rgba(10, 132, 255, 0.18));
+  --system-accent-border: light-dark(rgba(0, 96, 223, 0.15), rgba(10, 132, 255, 0.25));
+  
   /* Native spacing and typography */
   --message-spacing: 0;
   --message-padding: 12px 16px;
@@ -20,6 +26,16 @@
   --native-font: -moz-default;
   
   color-scheme: light dark;
+}
+
+/* Try to use system accent colors if available */
+@supports (color: AccentColor) {
+  :root {
+    --system-accent-color: AccentColor;
+    --system-accent-subtle: color-mix(in srgb, AccentColor 8%, transparent);
+    --system-accent-hover: color-mix(in srgb, AccentColor 15%, transparent);
+    --system-accent-border: color-mix(in srgb, AccentColor 20%, transparent);
+  }
 }
 
 * {
@@ -208,15 +224,15 @@ a img {
 
 .message:hover {
   background-color: light-dark(#fafbfc, #353540);
-  border-color: light-dark(rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.2));
+  border-color: var(--system-accent-border);
   box-shadow: 0 2px 4px light-dark(rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.2));
 }
 
 .message:focus {
   background-color: light-dark(#f8fafc, #3a3a47);
-  border-color: light-dark(rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.3));
+  border-color: var(--system-accent-hover);
   box-shadow: 
-    0 0 0 1px light-dark(rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.2)),
+    0 0 0 1px var(--system-accent-subtle),
     0 2px 4px light-dark(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.25));
   outline: none;
 }
@@ -241,7 +257,7 @@ a img {
 
 .messageHeader:hover {
   background-color: light-dark(#f8fafc, #353540);
-  border-bottom-color: light-dark(rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.15));
+  border-bottom-color: var(--system-accent-subtle);
 }
 
 .mainActionButton > .icon-link,
@@ -266,8 +282,8 @@ a img {
 }
 
 .options:hover {
-  background-color: light-dark(rgba(59, 130, 246, 0.04), rgba(59, 130, 246, 0.08));
-  border-color: light-dark(rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.12));
+  background-color: var(--system-accent-subtle);
+  border-color: var(--system-accent-border);
 }
 
 .author {
@@ -275,33 +291,33 @@ a img {
   margin-inline-end: 0.5rem;
   color: var(--layout-color-1);
   font-size: 1rem;
-  background-color: light-dark(rgba(59, 130, 246, 0.06), rgba(59, 130, 246, 0.12));
+  background-color: var(--system-accent-subtle);
   padding: 2px 6px;
   border-radius: 4px;
-  border: 1px solid light-dark(rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.15));
+  border: 1px solid var(--system-accent-border);
   transition: all 0.15s ease;
 }
 
 .author:hover {
-  background-color: light-dark(rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.18));
-  border-color: light-dark(rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.25));
+  background-color: var(--system-accent-hover);
+  border-color: var(--system-accent-border);
 }
 
 .to,
 .bzTo {
   color: var(--layout-color-2);
   font-size: 0.9rem;
-  background-color: light-dark(rgba(99, 102, 241, 0.04), rgba(99, 102, 241, 0.08));
+  background-color: var(--system-accent-subtle);
   padding: 1px 4px;
   border-radius: 3px;
-  border: 1px solid light-dark(rgba(99, 102, 241, 0.08), rgba(99, 102, 241, 0.12));
+  border: 1px solid var(--system-accent-border);
   transition: all 0.15s ease;
 }
 
 .to:hover,
 .bzTo:hover {
-  background-color: light-dark(rgba(99, 102, 241, 0.08), rgba(99, 102, 241, 0.15));
-  border-color: light-dark(rgba(99, 102, 241, 0.12), rgba(99, 102, 241, 0.2));
+  background-color: var(--system-accent-hover);
+  border-color: var(--system-accent-border);
 }
 
 /* That's what makes the ellipsis appear */
@@ -503,7 +519,7 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   border-radius: 50%;
   text-align: center;
   color: light-dark(#ffffff, #f8fafc);
-  background-color: light-dark(#6366f1, #4f46e5);
+  background-color: var(--system-accent-color);
   background-size: cover;
   background-position: center;
   font-size: 10px;
@@ -623,7 +639,7 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 
 .snippet:hover {
   background-color: light-dark(rgba(243, 244, 246, 0.8), rgba(55, 65, 81, 0.6));
-  border-left-color: light-dark(rgba(99, 102, 241, 0.4), rgba(99, 102, 241, 0.5));
+  border-left-color: var(--system-accent-hover);
 }
 
 .message .messageBody {
