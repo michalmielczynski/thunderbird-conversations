@@ -3,35 +3,123 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 :root {
-  /* Native Thunderbird 140 color system */
-  --layout-background-0: light-dark(#ffffff, #2a2a2e);
-  --layout-background-1: light-dark(#f5f5f5, #38383d);
+  /* Enhanced Thunderbird Native Color System */
+  --layout-background-0: light-dark(#ffffff, #18181b);
+  --layout-background-1: light-dark(#fafafa, #27272a);
   --layout-background-2: light-dark(#f4f4f5, #3f3f46);
-  --layout-color-1: light-dark(#0c0c0d, #f9f9fa);
-  --layout-color-2: light-dark(#4a4a4f, #b1b1b3);
-  --layout-border-0: light-dark(#d7d7db, #52525e);
-  --selected-item-color: light-dark(#0060df, #0a84ff);
-  --selected-item-text-color: light-dark(#ffffff, #ffffff);
+  --layout-background-3: light-dark(#e4e4e7, #52525b);
+  --layout-background-4: light-dark(#d4d4d8, #71717a);
   
-  /* Quick Filter button variables */
+  --layout-color-0: light-dark(#000000, #ffffff);
+  --layout-color-1: light-dark(#18181b, #f4f4f5);
+  --layout-color-2: light-dark(#3f3f46, #d4d4d8);
+  --layout-color-3: #71717a;
+  
+  --layout-border-0: light-dark(#d4d4d8, #3f3f46);
+  --layout-border-1: light-dark(#a1a1aa, #52525b);
+  --layout-border-2: #71717a;
+  
+  /* Enhanced Button System */
   --button-background-color: light-dark(#e4e4e7, #52525b);
+  --button-background-color-hover: color-mix(in srgb, currentColor 17%, transparent);
+  --button-background-color-active: color-mix(in srgb, currentColor 30%, transparent);
+  --button-background-color-primary: AccentColor;
+  --button-background-color-primary-hover: color-mix(in srgb, AccentColor 80%, black);
+  --button-background-color-primary-active: color-mix(in srgb, AccentColor 70%, black);
+  --button-background-color-ghost: transparent;
+  --button-background-color-ghost-hover: color-mix(in srgb, currentColor 17%, transparent);
+  --button-background-color-ghost-active: color-mix(in srgb, currentColor 30%, transparent);
+  --button-background-color-destructive: light-dark(#dc2626, #fca5a5);
+  --button-background-color-destructive-hover: light-dark(#b91c1c, #fecaca);
+  --button-background-color-destructive-active: light-dark(#991b1b, #fee2e2);
+  
+  --button-text-color: light-dark(#18181b, #f4f4f5);
+  --button-text-color-primary: AccentColorText;
+  --button-text-color-destructive: light-dark(#ffffff, #15141a);
+  
   --button-border-color: light-dark(#a1a1aa, #71717a);
+  --button-border-color-primary: transparent;
+  --button-border-color-destructive: transparent;
+  --button-border-radius: 3px;
   --button-border-size: 1px;
   --button-padding: 6px;
-  --toolbar-button-hover-background-color: color-mix(in srgb, currentColor 10%, transparent);
-  --toolbar-button-active-background-color: color-mix(in srgb, currentColor 20%, transparent);
+  --button-min-height: 32px;
+  --button-min-height-small: 24px;
   
-  /* System accent color variables with fallbacks */
+  /* Shadow System for Depth */
+  --box-shadow-level-1: 0 0 1px light-dark(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.2)), 0 1px 2px light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+  --box-shadow-level-2: 0 0.25px 0.75px light-dark(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.2)), 0 2px 6px light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+  --box-shadow-level-3: 0 0.375px 1.5px light-dark(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.2)), 0 3px 12px light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+  --box-shadow-level-4: 0 0.5px 2px light-dark(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.2)), 0 4px 16px light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+  --box-shadow-card: var(--box-shadow-level-2);
+  --box-shadow-card-hover: var(--box-shadow-level-4);
+  --box-shadow-popup: var(--box-shadow-level-3);
+  
+  /* Border Radius System */
+  --border-radius-small: 4px;
+  --border-radius-medium: 8px;
+  --border-radius-large: 12px;
+  --border-radius-circle: 9999px;
+  
+  /* Enhanced Semantic Colors */
+  --color-success-default: light-dark(#1d783b, #defae7);
+  --color-success-hover: light-dark(#1c5f32, #c0f2cf);
+  --color-success-pressed: light-dark(#194e2c, #8ee7aa);
+  --color-warning-default: light-dark(#facc15, #fef2c3);
+  --color-warning-hover: light-dark(#eabd08, #fee78a);
+  --color-warning-pressed: light-dark(#caa204, #fdd847);
+  --color-danger-default: light-dark(#991b1b, #fee2e2);
+  --color-danger-hover: light-dark(#7f1d1d, #fecaca);
+  --color-danger-pressed: light-dark(#7f1d1d, #fca5a5);
+  --color-primary-default: light-dark(#1373d9, #58c9ff);
+  --color-primary-hover: light-dark(#175fb6, #32aeff);
+  --color-primary-pressed: light-dark(#19518f, #1b90f5);
+  
+  /* Background Colors for Status */
+  --background-color-success: light-dark(oklch(97% 0.05 145), #14532d);
+  --background-color-warning: light-dark(oklch(97% 0.05 90), #713f12);
+  --background-color-critical: light-dark(oklch(97% 0.05 15), #7f1d1d);
+  --background-color-information: light-dark(oklch(97% 0.05 260), #15427c);
+  --background-color-box: light-dark(#ffffff, #27272a);
+  
+  /* Text Colors */
+  --color-text-base: light-dark(#1a202c, #eeeef0);
+  --color-text-secondary: light-dark(#4c4d58, #d9d9de);
+  --color-text-muted: light-dark(#737584, #7f94ac);
+  --color-text-success: light-dark(#1d783b, #55d37e);
+  --color-text-warning: light-dark(#713f12, #fee78a);
+  --color-text-critical: light-dark(#dc2626, #ef4444);
+  --color-text-highlight: light-dark(#1373d9, #58c9ff);
+  
+  /* Border Colors */
+  --border-color: light-dark(#cfcfd8, #3a3944);
+  --border-color-card: color-mix(in srgb, currentColor 10%, transparent);
+  --border-color-deemphasized: color-mix(in srgb, currentColor 24%, transparent);
+  --border-color-interactive: color-mix(in srgb, currentColor 15%, #52525b);
+  --border-color-interactive-hover: color-mix(in srgb, currentColor 15%, #52525b);
+  --border-color-interactive-active: color-mix(in srgb, currentColor 15%, #52525b);
+  
+  /* System Integration */
+  --selected-item-color: light-dark(#0060df, #0a84ff);
+  --selected-item-text-color: light-dark(#ffffff, #ffffff);
   --system-accent-color: light-dark(var(--selected-item-color), var(--selected-item-color));
   --system-accent-subtle: light-dark(rgba(0, 96, 223, 0.08), rgba(10, 132, 255, 0.12));
   --system-accent-hover: light-dark(rgba(0, 96, 223, 0.12), rgba(10, 132, 255, 0.18));
   --system-accent-border: light-dark(rgba(0, 96, 223, 0.15), rgba(10, 132, 255, 0.25));
   
+  /* Toolbar Variables */
+  --toolbar-button-hover-background-color: var(--button-background-color-hover);
+  --toolbar-button-active-background-color: var(--button-background-color-active);
+  
   /* Native spacing and typography */
   --message-spacing: 0;
   --message-padding: 12px 16px;
-  --border-radius: 0;
+  --border-radius: var(--border-radius-small);
   --native-font: -moz-default;
+  
+  /* Focus and Interaction */
+  --focus-outline: 2px solid AccentColor;
+  --focus-outline-offset: 2px;
   
   color-scheme: light dark;
 }
@@ -124,26 +212,31 @@ a img {
   align-items: center;
   justify-content: center;
   color: var(--layout-color-2);
-  padding: 6px;
-  border-radius: 6px;
+  padding: var(--button-padding);
+  border-radius: var(--button-border-radius);
   border: none;
-  background: transparent;
+  background: var(--button-background-color-ghost);
   cursor: pointer;
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  min-width: 32px;
-  min-height: 32px;
+  min-width: var(--button-size-icon);
+  min-height: var(--button-size-icon);
 }
 
 .icon-link:focus,
 .icon-link:hover {
   color: var(--layout-color-1);
-  background-color: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.08));
+  background-color: var(--button-background-color-ghost-hover);
   transform: translateY(-1px);
 }
 
 .icon-link:active {
   transform: translateY(0);
-  background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.12));
+  background-color: var(--button-background-color-ghost-active);
+}
+
+.icon-link:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .link:hover,
@@ -194,7 +287,7 @@ a img {
   left: 0;
   width: 100%;
   z-index: 150;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--box-shadow-level-1);
 }
 
 .conversationHeader {
@@ -206,7 +299,6 @@ a img {
   flex-direction: row;
   align-items: center;
   gap: 12px;
-  padding: 6px 12px;
 }
 
 .subject {
@@ -364,18 +456,20 @@ a img {
 
 .message {
   margin: 0 0 4px 0;
-  border: 1px solid light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.1));
-  border-radius: 6px;
+  border: 1px solid var(--border-color-card);
+  border-radius: var(--border-radius-medium);
   list-style-type: none;
-  background-color: var(--layout-background-0);
-  box-shadow: 0 1px 3px light-dark(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.12));
+  background-color: var(--background-color-box);
+  box-shadow: var(--box-shadow-card);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+  color: var(--layout-color-1);
 }
 
 .message:hover {
   background-color: var(--system-accent-subtle);
   border-color: var(--system-accent-border);
+  box-shadow: var(--box-shadow-card-hover);
 }
 
 .message:focus {
@@ -402,19 +496,20 @@ a img {
   align-items: center;
   gap: 10px;
   border: none;
-  border-bottom: 1px solid light-dark(rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
-  background-color: light-dark(rgba(0, 0, 0, 0.02), rgba(255, 255, 255, 0.03));
-  border-radius: 6px 6px 0 0;
+  border-bottom: 1px solid var(--border-color-deemphasized);
+  background-color: var(--layout-background-0);
+  border-radius: var(--border-radius-medium) var(--border-radius-medium) 0 0;
+  color: var(--layout-color-1);
 }
 
 .messageHeader:hover {
-  background-color: light-dark(rgba(0, 0, 0, 0.035), rgba(255, 255, 255, 0.05));
-  border-bottom-color: var(--system-accent-subtle);
+  background-color: var(--layout-background-1);
+  border-bottom-color: var(--border-color-interactive-hover);
 }
 
 /* For collapsed messages (not expanded), round all corners and remove border-bottom */
 .message:not(:has(.messageHeader.expanded)) .messageHeader {
-  border-radius: 6px;
+  border-radius: var(--border-radius-medium);
   border-bottom: none;
 }
 

@@ -3,19 +3,77 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 :root {
-  --application-background-color: white;
-  --application-foreground-color: black;
+  /* Core Thunderbird Native Layout Colors */
+  --layout-background-0: light-dark(#ffffff, #18181b);
+  --layout-background-1: light-dark(#fafafa, #27272a);
+  --layout-background-2: light-dark(#f4f4f5, #3f3f46);
+  --layout-background-3: light-dark(#e4e4e7, #52525b);
+  --layout-background-4: light-dark(#d4d4d8, #71717a);
+  
+  /* Layout Text Colors */
+  --layout-color-0: light-dark(#000000, #ffffff);
+  --layout-color-1: light-dark(#18181b, #f4f4f5);
+  --layout-color-2: light-dark(#3f3f46, #d4d4d8);
+  --layout-color-3: #71717a;
+  
+  /* Layout Borders */
+  --layout-border-0: light-dark(#d4d4d8, #3f3f46);
+  --layout-border-1: light-dark(#a1a1aa, #52525b);
+  --layout-border-2: #71717a;
+  
+  /* Legacy compatibility variables */
+  --application-background-color: var(--layout-background-0);
+  --application-foreground-color: var(--layout-color-1);
+  --in-content-box-background: var(--layout-background-2);
+  
+  /* Button System Variables */
+  --button-background-color: light-dark(#e4e4e7, #52525b);
+  --button-background-color-hover: color-mix(in srgb, currentColor 17%, transparent);
+  --button-background-color-active: color-mix(in srgb, currentColor 30%, transparent);
+  --button-background-color-primary: AccentColor;
+  --button-background-color-primary-hover: color-mix(in srgb, AccentColor 80%, black);
+  --button-background-color-primary-active: color-mix(in srgb, AccentColor 70%, black);
+  
+  --button-text-color: light-dark(#18181b, #f4f4f5);
+  --button-text-color-primary: AccentColorText;
+  
+  --button-border-color: light-dark(#a1a1aa, #71717a);
+  --button-border-color-primary: transparent;
+  --button-border-radius: 3px;
+  --button-border-size: 1px;
+  --button-padding: 6px;
+  --button-min-height: 32px;
+  
+  /* Semantic Colors */
+  --color-success-default: light-dark(#1d783b, #defae7);
+  --color-success-hover: light-dark(#1c5f32, #c0f2cf);
+  --color-warning-default: light-dark(#facc15, #fef2c3);
+  --color-warning-hover: light-dark(#eabd08, #fee78a);
+  --color-danger-default: light-dark(#991b1b, #fee2e2);
+  --color-danger-hover: light-dark(#7f1d1d, #fecaca);
+  --color-primary-default: light-dark(#1373d9, #58c9ff);
+  --color-primary-hover: light-dark(#175fb6, #32aeff);
+  
+  /* Background Colors for Status */
+  --background-color-success: light-dark(oklch(97% 0.05 145), #14532d);
+  --background-color-warning: light-dark(oklch(97% 0.05 90), #713f12);
+  --background-color-critical: light-dark(oklch(97% 0.05 15), #7f1d1d);
+  --background-color-information: light-dark(oklch(97% 0.05 260), #15427c);
+  
+  /* System Integration */
+  --selected-item-color: light-dark(#0060df, #0a84ff);
+  --selected-item-text-color: light-dark(#ffffff, #ffffff);
+  
+  color-scheme: light dark;
 }
 
+/* Legacy dark mode support for older Thunderbird versions */
 @media (prefers-color-scheme: dark) {
   :root {
-    --application-background-color: rgb(28, 27, 34);
-    --application-foreground-color: rgb(251, 251, 254);
-    --in-content-box-background: rgb(35, 34, 43);
-    --in-content-button-background: rgb(43, 42, 51);
-    --in-content-button-text-color: rgb(251, 251, 254);
-    --in-content-button-background-hover: rgb(82, 82, 94);
-    --in-content-button-background-active: rgb(91, 91, 102);
+    --in-content-button-background: var(--button-background-color);
+    --in-content-button-text-color: var(--button-text-color);
+    --in-content-button-background-hover: var(--button-background-color-hover);
+    --in-content-button-background-active: var(--button-background-color-active);
   }
 }
 
