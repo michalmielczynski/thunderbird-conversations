@@ -8,10 +8,24 @@ This modernized version includes significant improvements over the original:
 
 - **Native Thunderbird Styling**: Seamlessly integrates with Thunderbird's modern interface
 - **Streamlined UI**: Removed clutter like QuickReply interface, star buttons, and unnecessary footers
+- **Modern Attachment Display**: Compact, clickable attachment cards with unified icons replace large thumbnails
+- **Space-Efficient Layout**: Grid-based attachment layout saves significant screen space
 - **System Integration**: Uses system accent colors and respects light/dark mode preferences
-- **Cleaner Message Display**: Simplified attachment views and message headers
+- **Enhanced UX**: Whole attachment cards are clickable with dedicated download actions
+- **Clean Message Display**: Simplified headers and streamlined action buttons
 - **Modern Design Language**: Card-based layouts with subtle shadows and smooth animations
 - **Reduced Complexity**: Removed legacy theming options that caused display issues
+
+### 🗂️ Attachment Improvements (v4.3.4)
+
+The attachment system has been completely redesigned:
+
+- **Clickable Cards**: Entire attachment area is clickable for opening/previewing files
+- **Unified Icons**: Simple, consistent icons replace varied file type thumbnails  
+- **Compact Grid**: Multiple attachments display side-by-side in space-efficient cards
+- **Smart Text Handling**: Long filenames wrap properly with ellipsis truncation
+- **Single Action**: Streamlined download button as the only separate action needed
+- **Visual Feedback**: Hover effects and transitions provide clear interaction cues
 
 For a detailed list of changes, see [MODERNIZATION_PROGRESS.md](docs/MODERNIZATION_PROGRESS.md).
 
