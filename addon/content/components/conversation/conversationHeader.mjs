@@ -185,7 +185,7 @@ class _ConversationHeader extends React.PureComponent {
           React.createElement(
             "button",
             {
-              className: "button-flat",
+              className: "quickfilter-btn",
               title: browser.i18n.getMessage("message.detach.tooltip"),
               onClick: this.detachTab,
             },
@@ -197,8 +197,8 @@ class _ConversationHeader extends React.PureComponent {
           React.createElement(
             "button",
             {
-              className: `button-flat ${
-                this.areSomeMessagesUnread ? "unread" : ""
+              className: `quickfilter-btn ${
+                this.areSomeMessagesUnread ? "active" : ""
               }`,
               title: browser.i18n.getMessage("message.read.tooltip"),
               onClick: this.toggleRead,
@@ -208,7 +208,7 @@ class _ConversationHeader extends React.PureComponent {
           React.createElement(
             "button",
             {
-              className: "button-flat",
+              className: "quickfilter-btn",
               title: browser.i18n.getMessage("message.expand.tooltip"),
               onClick: this.expandCollapse,
             },
@@ -237,7 +237,7 @@ class _ConversationHeader extends React.PureComponent {
             React.createElement(
               "button",
               {
-                className: "button-flat junk-button",
+                className: "quickfilter-btn",
                 title: browser.i18n.getMessage("message.junk.tooltip"),
                 onClick: this.junkConversation,
               },
@@ -249,7 +249,7 @@ class _ConversationHeader extends React.PureComponent {
           React.createElement(
             "button",
             {
-              className: "button-flat",
+              className: "quickfilter-btn",
               title: browser.i18n.getMessage("message.archive.tooltip"),
               onClick: this.archiveToolbar,
             },
@@ -258,7 +258,7 @@ class _ConversationHeader extends React.PureComponent {
           React.createElement(
             "button",
             {
-              className: "button-flat",
+              className: "quickfilter-btn",
               title: browser.i18n.getMessage("message.trash.tooltip"),
               onClick: this.delete,
             },

@@ -196,6 +196,9 @@ a img {
   color: var(--layout-color-1);
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
 }
 
 .subject {
@@ -209,7 +212,86 @@ a img {
   flex: 1;
 }
 
-.actions button {
+/* Quick Filter style buttons - exact native Thunderbird appearance */
+.actions .quickfilter-btn {
+  -moz-appearance: none !important;
+  background: light-dark(#e8e8e8, #424242) !important;
+  border: 1px solid light-dark(#b8b8b8, #5a5a5a) !important;
+  border-radius: 0 !important;
+  color: light-dark(#333333, #cccccc) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 26px !important;
+  min-width: 28px !important;
+  padding: 2px 4px !important;
+  margin: 0 !important;
+  transition: background-color 0.1s ease !important;
+  position: relative !important;
+  font-size: 0 !important;
+  text-align: center !important;
+  box-shadow: none !important;
+}
+
+.actions .quickfilter-btn:hover {
+  background: light-dark(#d8d8d8, #4a4a4a) !important;
+  border-color: light-dark(#a8a8a8, #626262) !important;
+}
+
+.actions .quickfilter-btn:active {
+  background: light-dark(#d0d0d0, #525252) !important;
+}
+
+.actions .quickfilter-btn.active {
+  background: var(--system-accent-color) !important;
+  border-color: var(--system-accent-color) !important;
+  color: var(--selected-item-text-color) !important;
+}
+
+.actions .quickfilter-btn.active:hover {
+  background: color-mix(in srgb, var(--system-accent-color) 90%, black) !important;
+}
+
+.actions .quickfilter-btn .icon {
+  width: 16px !important;
+  height: 16px !important;
+  fill: currentColor !important;
+}
+
+/* First button - rounded left corners */
+.actions .quickfilter-btn:first-child {
+  border-top-left-radius: 3px !important;
+  border-bottom-left-radius: 3px !important;
+}
+
+/* Last button - rounded right corners */
+.actions .quickfilter-btn:last-child {
+  border-top-right-radius: 3px !important;
+  border-bottom-right-radius: 3px !important;
+}
+
+/* Remove double borders between connected buttons */
+.actions .quickfilter-btn + .quickfilter-btn {
+  border-left: none !important;
+}
+
+/* Group buttons together seamlessly */
+.actions {
+  display: flex;
+  gap: 0;
+  align-items: center;
+  margin-left: auto;
+}
+
+.actions .quickfilter-btn:focus {
+  z-index: 1;
+  outline: 1px solid var(--system-accent-color) !important;
+  outline-offset: -1px !important;
+}
+
+/* Keep the old button styling for any non-quickfilter buttons */
+.actions button:not(.quickfilter-btn) {
   min-width: 24px;
   text-align: center;
   height: 20px;

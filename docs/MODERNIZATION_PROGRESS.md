@@ -105,7 +105,7 @@
 - **Updated Homepage**: Points to fork repository at `https://github.com/michalmielczynski/thunderbird-conversations`
 - **Author Attribution**: Credits both original author and modernization work
 - **README Overhaul**: Clear indication this is a modernized fork with feature highlights and proper attribution
-- **Version Bump**: Updated to v4.3.4 reflecting clickable attachment cards and streamlined UI
+- **Version Bump**: Updated to v4.3.5 reflecting Quick Filter styling integration and enhanced native appearance
 
 ### 16. **Unified Attachment Icons**
 
@@ -127,13 +127,26 @@
 - **Preserved Functionality**: Download action remains independent and properly positioned
 - **Clean Design**: Single download icon in bottom-right corner maintains visual balance
 
+### 18. **Native Quick Filter Styling Integration**
+
+- **Conversation Header Enhancement**: Updated action buttons to match Thunderbird's native Quick Filter appearance
+- **Darker Gray Backgrounds**: Applied `#e8e8e8` (light) / `#424242` (dark) backgrounds matching native UI
+- **Sharp Border Definition**: Implemented `#b8b8b8` borders for crisp, clean button separation
+- **Seamless Button Grouping**: Removed inner borders for connected button appearance like native Quick Filter
+- **Proper Dimensions**: Set 26px height to match native Thunderbird Quick Filter button standards
+- **System Color Integration**: Maintained system accent colors for active states and hover effects
+- **CSS Class Migration**: Changed from `.button-flat` to `.quickfilter-btn` class for better styling control
+- **High Specificity Styling**: Used `!important` declarations to ensure proper style application over existing rules
+
 ## 📁 Key Modified Files
 
 - `README.md` - Complete rewrite highlighting modernization and fork status
 - `addon/manifest.json` - Updated identity, author, and homepage
 - `addon/_locales/en/messages.json` - Updated extension name and description
 
-- `addon/content/conversation.css` - Main stylesheet overhauled, enhanced attachment hover effects
+- `addon/content/conversation.css` - Main stylesheet overhauled, Quick Filter button styling, enhanced attachment hover effects
+- `addon/content/components/conversation/conversationHeader.mjs` - Quick Filter styling implementation, button class updates
+- `addon/content/icons/material-icons.svg` - Added missing icons for Quick Filter functionality
 - `addon/content/components/message/messageHeader.mjs` - Star removal, avatar simplification
 - `addon/content/components/message/message.mjs` - Footer and QuickReply removal
 - `addon/content/components/message/attachments.mjs` - Enhanced attachment interaction, proper event handling

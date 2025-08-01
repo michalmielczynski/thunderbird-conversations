@@ -7,6 +7,7 @@
 This modernized version includes significant improvements over the original:
 
 - **Native Thunderbird Styling**: Seamlessly integrates with Thunderbird's modern interface
+- **Quick Filter UI Integration**: Header buttons now match native Thunderbird Quick Filter appearance
 - **Streamlined UI**: Removed clutter like QuickReply interface, star buttons, and unnecessary footers
 - **Modern Attachment Display**: Compact, clickable attachment cards with unified icons replace large thumbnails
 - **Space-Efficient Layout**: Grid-based attachment layout saves significant screen space
@@ -15,6 +16,16 @@ This modernized version includes significant improvements over the original:
 - **Clean Message Display**: Simplified headers and streamlined action buttons
 - **Modern Design Language**: Card-based layouts with subtle shadows and smooth animations
 - **Reduced Complexity**: Removed legacy theming options that caused display issues
+
+### 🎨 Quick Filter Integration (v4.3.5)
+
+The conversation header has been enhanced to match Thunderbird's native Quick Filter appearance:
+
+- **Native Button Styling**: Header action buttons now use the same visual style as Quick Filter buttons
+- **Seamless Integration**: Darker gray backgrounds with sharp, thin borders match native UI
+- **Connected Layout**: Buttons group together seamlessly like native Quick Filter controls
+- **System Colors**: Maintains system accent color integration for active states
+- **Consistent Dimensions**: 26px height matching native Thunderbird button standards
 
 ### 🗂️ Attachment Improvements (v4.3.4)
 
