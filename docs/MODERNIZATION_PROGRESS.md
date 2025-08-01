@@ -86,7 +86,17 @@
 - **Better Accessibility**: Changed download button from `<a>` to `<button>` for semantic correctness
 - **Consistent UI**: Download action button maintains the same styling and behavior as other icon buttons
 
-### 13. **Extension Identity Update**
+### 14. **Modern Expand/Collapse Controls**
+
+- **Replaced Orange Text Links**: Removed ugly orange "- show quoted text -" text links
+- **Icon-Only Design**: Clean expand/collapse using only Material Design icons (`expand_more`/`expand_less`)
+- **Compact Footprint**: Minimal 24px icon buttons that don't clutter the message content
+- **Smart Tooltips**: Text content available via hover tooltips for accessibility
+- **Consistent Styling**: Matches the extension's icon button design system
+- **Enhanced Interaction**: Smooth hover effects and transitions
+- **Signature Toggles**: Also updated signature collapse/expand to use the same modern styling
+
+### 15. **Extension Identity Update**
 
 - **Unique Add-on ID**: Changed from `gconversation@xulforum.org` to `thunderbird-conversations-modernized@michalmielczynski.dev`
 - **Updated Name**: Extension now called "Thunderbird Conversations (Modernized)"
@@ -106,6 +116,7 @@
 - `addon/content/components/message/messageHeader.mjs` - Star removal, avatar simplification
 - `addon/content/components/message/message.mjs` - Footer and QuickReply removal
 - `addon/content/components/message/attachments.mjs` - Enhanced attachment interaction, proper event handling
+- `addon/content/components/message/messageIFrame.mjs` - Modern expand/collapse controls with icons
 - `addon/content/components/message/messageHeaderOptions.mjs` - Three-dots menu removal
 - `addon/content/reducer/reducerSummary.mjs` - State defaults simplified
 - `addon/background/prefs.mjs` - Default preferences cleaned up

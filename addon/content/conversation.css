@@ -143,6 +143,38 @@ a img {
   text-decoration: underline;
 }
 
+/* Quote toggle buttons - match Thunderbird conversation list styling */
+.showhidequote.icon-link,
+.showhidesig.icon-link {
+  min-width: auto !important;
+  min-height: 24px !important;
+  padding: 4px 6px !important;
+  border: 1px solid transparent !important;
+  border-radius: 3px !important;
+  gap: 2px;
+  font-size: 0.85rem;
+  color: var(--layout-color-2);
+  background: transparent !important;
+  transform: none !important;
+}
+
+.showhidequote.icon-link:hover,
+.showhidequote.icon-link:focus,
+.showhidesig.icon-link:hover,
+.showhidesig.icon-link:focus {
+  border: 1px solid light-dark(rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.03)) !important;
+  background-color: light-dark(rgba(0, 0, 0, 0.008), rgba(255, 255, 255, 0.008)) !important;
+  transform: none !important;
+  color: var(--layout-color-1);
+}
+
+.showhidequote.icon-link:active,
+.showhidesig.icon-link:active {
+  border: 1px solid light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05)) !important;
+  background-color: light-dark(rgba(0, 0, 0, 0.015), rgba(255, 255, 255, 0.015)) !important;
+  transform: none !important;
+}
+
 #conversationWrapper {
   position: relative;
   background-color: var(--layout-background-0);

@@ -12,12 +12,16 @@ let index = 0;
 
 const domParser = new DOMParser();
 const TOGGLE_TEMPLATE = `<button
-    class="link"
-    style="cursor: pointer; user-select: none; background-color: inherit; border: inherit;"
+    class="link icon-link"
+    style="cursor: pointer; user-select: none; background-color: transparent; display: inline-flex; align-items: center; gap: 2px; padding: 4px 6px; margin: 6px 0; transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); color: var(--layout-color-2); font-size: 0.85rem; min-height: 24px; border: 1px solid transparent;"
     show-text=""
     hide-text=""
+    title=""
   >
-    SHOW/HIDE
+    <span class="toggle-text" style="font-size: 0.85rem; line-height: 1.2; text-transform: capitalize;"></span>
+    <svg class="icon" style="width: 14px; height: 14px; fill: currentColor; flex-shrink: 0;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+    </svg>
   </button>`;
 
 /**
@@ -51,12 +55,17 @@ function createToggleForNode(
     .childNodes[0];
   toggle.setAttribute("show-text", showText);
   toggle.setAttribute("hide-text", hideText);
-  toggle.style.color = linkColor;
-  toggle.style.fontSize = smallSize;
+  // Remove the old color and size styling - now handled by CSS
   toggle.classList.add(...linkClass.split(/\s/));
 
   function show() {
-    toggle.textContent = `- ${toggle.getAttribute("hide-text")} -`;
+    const iconPath = toggle.querySelector("path");
+    const toggleText = toggle.querySelector(".toggle-text");
+    // expand_more icon path (down arrow when expanded)
+    iconPath.setAttribute("d", "M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z");
+    // Show hide text (e.g., "hide quoted text")
+    toggleText.textContent = toggle.getAttribute("hide-text").replace(/^- /, "").replace(/ -$/, "");
+    toggle.setAttribute("title", toggle.getAttribute("hide-text"));
     toggle.setAttribute("state", "visible");
     node.style.display = "";
     // The callback may want to do something with the size of the revealed node, so call the callback after it's visible
@@ -64,7 +73,13 @@ function createToggleForNode(
   }
 
   function hide() {
-    toggle.textContent = `- ${toggle.getAttribute("show-text")} -`;
+    const iconPath = toggle.querySelector("path");
+    const toggleText = toggle.querySelector(".toggle-text");
+    // chevron_right icon path (right arrow when collapsed)
+    iconPath.setAttribute("d", "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z");
+    // Show show text (e.g., "show quoted text")
+    toggleText.textContent = toggle.getAttribute("show-text").replace(/^- /, "").replace(/ -$/, "");
+    toggle.setAttribute("title", toggle.getAttribute("show-text"));
     toggle.setAttribute("state", "hidden");
     // The callback may want to do something with the size of the revealed node, so call the callback before it's hidden
     onToggle(false, node);
@@ -490,8 +505,6 @@ export class MessageIFrame extends React.Component {
             hideText: browser.i18n.getMessage("messageBody.hideQuotedText"),
             showText: browser.i18n.getMessage("messageBody.showQuotedText"),
             linkClass: "showhidequote",
-            smallSize: Math.round((100 * this.props.defaultFontSize * 11) / 12) / 100,
-            linkColor: "orange",
             onToggle: toggleCallbackFactory(iframe),
           });
           // We only put a show/hide button on the first suitable quote,
@@ -515,8 +528,6 @@ export class MessageIFrame extends React.Component {
         hideText: browser.i18n.getMessage("messageBody.hideSigText"),
         showText: browser.i18n.getMessage("messageBody.showSigText"),
         linkClass: "showhidesig",
-        smallSize: Math.round((100 * this.props.defaultFontSize * 11) / 12) / 100,
-        linkColor: "rgb(56, 117, 215)",
         onToggle: toggleCallbackFactory(iframe),
       });
     }
