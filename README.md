@@ -17,6 +17,12 @@ This modernized version includes significant improvements over the original:
 - **Modern Design Language**: Card-based layouts with subtle shadows and smooth animations
 - **Reduced Complexity**: Removed legacy theming options that caused display issues
 
+### 🔧 Maintenance Update (v4.3.7)
+
+- Version synchronization fixes
+- Updated dependencies and compatibility
+- Minor bug fixes and improvements
+
 ### 📨 Read Receipt Notifications (v4.3.6)
 
 Added native read receipt request detection and notification:
