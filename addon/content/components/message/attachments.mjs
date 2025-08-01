@@ -6,34 +6,6 @@ import React from "react";
 import { attachmentActions } from "../../reducer/reducerAttachments.mjs";
 import { SvgIcon } from "../svgIcon.mjs";
 
-const ICON_MAPPING = new Map([
-  ["application/msword", "x-office-document"],
-  ["application/vnd.ms-excel", "x-office-spreadsheet"],
-  ["application/vnd.ms-powerpoint", "x-office-presentation"],
-  ["application/rtf", "x-office-document"],
-  ["application/zip", "package-x-generic"],
-  ["application/bzip2", "package-x-generic"],
-  ["application/x-gzip", "package-x-generic"],
-  ["application/x-tar", "package-x-generic"],
-  ["application/x-compressed", "package-x-generic"],
-  // "message/": "email",
-  ["text/x-vcalendar", "x-office-calendar"],
-  ["text/x-vcard", "x-office-address-book"],
-  ["text/html", "text-html"],
-  ["application/pdf", "application-pdf"],
-  ["application/x-pdf", "application-pdf"],
-  ["application/x-bzpdf", "application-pdf"],
-  ["application/x-gzpdf", "application-pdf"],
-]);
-
-const FALLBACK_ICON_MAPPING = new Map([
-  // Fallbacks, at the end.
-  ["video/", "video-x-generic"],
-  ["audio/", "audio-x-generic"],
-  ["image/", "image-x-generic"],
-  ["text/", "text-x-generic"],
-]);
-
 /**
  * Handles display of an individual attachment.
  *
@@ -122,76 +94,36 @@ function Attachment({
 
 
 
-  function iconForMimeType(mimeType) {
-    if (ICON_MAPPING.has(mimeType)) {
-      return ICON_MAPPING.get(mimeType) + ".svg";
-    }
-    let split = mimeType.split("/");
-    if (split.length && FALLBACK_ICON_MAPPING.has(split[0] + "/")) {
-      return FALLBACK_ICON_MAPPING.get(split[0] + "/") + ".svg";
-    }
-    return "gtk-file.png";
-  }
-
   let isDeleted = contentType == "text/x-moz-deleted";
 
   let isImage = contentType.startsWith("image/");
-  let imgTitle = isImage
+  let attachmentTitle = isImage
     ? browser.i18n.getMessage("attachments.viewAttachment.tooltip")
     : browser.i18n.getMessage("attachments.open.tooltip");
 
-  let [thumb, setThumb] = React.useState(null);
-  let [imgClass, setImgClass] = React.useState(null);
-  React.useEffect(() => {
-    if (isImage) {
-      // TODO: Can we load images separately and make them available later,
-      // so that we're not relying on having the url here. This would
-      // mean we can use browser.messages.listAttachments.
-      (async () => {
-        let file = await browser.messages.getAttachmentFile(id, partName);
-        setThumb(URL.createObjectURL(file));
-        setImgClass("resize-me");
-      })();
-    } else {
-      setThumb("icons/" + iconForMimeType(contentType));
-      setImgClass("mime-icon");
-    }
-  }, [id, contentType, partName]);
+  let handleAttachmentClick = null;
+  if (!isDeleted) {
+    handleAttachmentClick = isImage ? preview : openAttachment;
+  }
 
   // TODO: Drag n drop
   // onDragStart={this.onDragStart}
   return React.createElement(
     "li",
-    { className: "attachment" },
-    isDeleted &&
-      React.createElement(
-        "div",
-        { className: "attachmentThumb deleted", draggable: "false" },
-        React.createElement("img", {
-          className: imgClass,
-          src: thumb,
-          title: name,
-        })
-      ),
-    !isDeleted &&
-      React.createElement(
-        "div",
-        {
-          className: "attachmentThumb",
-          draggable: "false",
-          onClick: isImage ? preview : openAttachment,
-        },
-        React.createElement("img", {
-          className: imgClass,
-          src: thumb,
-          title: imgTitle,
-        })
-      ),
+    { 
+      className: `attachment ${isDeleted ? 'deleted' : 'clickable'}`,
+      onClick: handleAttachmentClick,
+      title: !isDeleted ? attachmentTitle : undefined
+    },
     React.createElement(
       "div",
-      { className: "attachmentInfo align" },
+      { className: "attachmentInfo" },
       React.createElement("span", { className: "filename" }, name),
-      React.createElement("span", { className: "filesize" }, formattedSize),
+      React.createElement("span", { className: "filesize" }, formattedSize)
+    ),
+    React.createElement(
+      "div",
+      { className: "attachment-actions-row" },
       !isDeleted &&
         React.createElement(
           "div",

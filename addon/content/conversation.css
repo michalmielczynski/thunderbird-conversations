@@ -838,17 +838,12 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   color: var(--layout-color-2);
 }
 
-.attachmentIcon {
-  color: var(--layout-color-2);
-}
-
-.attachmentIcon .icon {
-  transform: rotate(-50deg);
-}
-
 .attachments {
   padding: 10px 0 0 0;
   margin: 0 0 18px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .attachHeader {
@@ -858,75 +853,82 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 }
 
 .attachment {
-  margin: 10px 0 0 0;
-  width: 100%;
+  margin: 0;
   list-style-type: none;
   display: flex;
-  flex-direction: row;
-}
-
-.attachmentThumb {
-  width: 130px;
-  padding: 4px;
-  border: 1px solid var(--border-color);
-  background-color: #fff;
-  background-image: linear-gradient(to bottom, #fff 0%, #f2f2f2 100%);
-  margin: 0 20px 0 0;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  line-height: 0; /* Needed, otherwise there's an extra padding at the bottom... */
-  cursor: pointer;
+  flex-direction: column;
+  gap: 6px;
+  background-color: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.08));
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  min-width: 200px;
+  max-width: 320px;
+  flex: 1;
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.attachmentThumb:hover {
+.attachment.clickable {
+  cursor: pointer;
+}
+
+.attachment.clickable:hover {
+  background-color: light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.12));
+  border-color: light-dark(rgba(0, 0, 0, 0.15), rgba(255, 255, 255, 0.15));
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.attachmentThumb.deleted {
-  cursor: auto;
+.attachment.clickable:active {
+  transform: translateY(0);
+  background-color: light-dark(rgba(0, 0, 0, 0.12), rgba(255, 255, 255, 0.16));
 }
 
-.attachmentThumb.deleted:hover {
-  transform: none;
-  box-shadow: none;
+.attachment.deleted {
+  opacity: 0.6;
+  cursor: default;
 }
 
-.attachmentThumb img {
-  image-rendering: optimizeQuality;
+.attachmentInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 0.9rem;
+  min-height: 2.4rem;
 }
 
-.preview-attachment {
+.filename {
   font-weight: bold;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-/* For moz-icons */
-.attachmentThumb img.mime-icon {
-  height: auto;
-  width: 48px;
-}
-
-/* For thumbnails */
-.attachmentThumb img.resize-me {
-  max-width: 120px;
-  max-height: 80px;
+.attachment-actions-row {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .attachActions {
-  display: inline-block;
-  margin-top: 0.5em;
-  font-size: 150%;
+  display: flex;
+  align-items: center;
+}
+
+.attachActions .icon-link {
+  min-width: 28px;
+  min-height: 28px;
+  padding: 4px;
 }
 
 .view-all {
   font-weight: bold;
-}
-
-.attachmentInfo {
-  display: inline-block;
-  float: inline-start;
 }
 
 .filename,

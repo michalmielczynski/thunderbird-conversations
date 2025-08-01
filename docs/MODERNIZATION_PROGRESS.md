@@ -66,14 +66,15 @@
 - Uses Thunderbird's standard padding and margins
 - Matches Thunderbird 140's color variables
 
-### 11. **Minimalist Attachment Display**
+### 11. **Simplified Attachment Display**
 
+- **Unified Icon Design**: Replaced large attachment thumbnails with simple unified icons matching the download button style
+- **Consistent Styling**: Both attachment and download icons use the same `.icon-link` styling for visual harmony  
+- **Space Efficient**: Compact 32px icon buttons instead of large 130px thumbnails save significant screen space
+- **Clean Layout**: Attachment info flows naturally with text content and action icons
 - **Removed Attachment Info Header**: Eliminated the "X attachments" info line with horizontal separator
 - **Removed Three-Dots Menu**: Completely removed the more actions menu from message headers
-- **Streamlined Actions**: Only the download icon remains as an action for attachments
-- **Compact Icon Sizing**: Reduced attachment icons to 16px for cleaner display
-- **Clean Thumbnail View**: Removed action overlay icons (preview, open, menu) from attachment thumbnails
-- **Simplified UI**: Only filename, file size, and download action are visible
+- **Streamlined Actions**: Only attachment icon and download icon remain as actions
 - **Code Cleanup**: Removed unused functions (`detachAttachment`, `deleteAttachment`, `handleDisplayMenu`)
 - **Component Removal**: Deleted `AttachmentMoreMenu` component and related state management
 
@@ -104,7 +105,27 @@
 - **Updated Homepage**: Points to fork repository at `https://github.com/michalmielczynski/thunderbird-conversations`
 - **Author Attribution**: Credits both original author and modernization work
 - **README Overhaul**: Clear indication this is a modernized fork with feature highlights and proper attribution
-- **Version Bump**: Updated to v4.3.3 reflecting attachment interaction improvements
+- **Version Bump**: Updated to v4.3.4 reflecting clickable attachment cards and streamlined UI
+
+### 16. **Unified Attachment Icons**
+
+- **Replaced Large Thumbnails**: Removed 130px attachment thumbnails with simple unified attachment icons
+- **Material Design Integration**: Uses Material Design `attachment` icon matching the extension's design system
+- **Consistent Icon Styling**: Both attachment and download icons share identical `.icon-link` button styling
+- **Space Optimization**: Reduced attachment display footprint by ~80% while maintaining functionality
+- **Hover Effects**: Proper hover states with smooth transitions and visual feedback
+- **Accessibility**: Maintained click functionality and tooltips for screen readers
+- **Icon Alignment**: Fixed layout issues and border offset problems in attachment display
+
+### 17. **Clickable Attachment Cards**
+
+- **Whole Card Interaction**: Entire attachment card is now clickable for opening/previewing attachments
+- **Removed Redundant Icon**: Eliminated the attachment icon since the whole card serves as the action trigger
+- **Smart Event Handling**: Download button properly stops event propagation to prevent conflicts
+- **Enhanced UX**: Larger click target makes attachment interaction more intuitive and accessible
+- **Visual Feedback**: Card hover effects clearly indicate clickable nature with subtle lift animation
+- **Preserved Functionality**: Download action remains independent and properly positioned
+- **Clean Design**: Single download icon in bottom-right corner maintains visual balance
 
 ## 📁 Key Modified Files
 
