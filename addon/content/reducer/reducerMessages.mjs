@@ -193,6 +193,14 @@ export const messageActions = {
       browser.messages.update(id, { read: true }).catch(console.error);
     };
   },
+  ignoreReadReceiptRequest({ id }) {
+    return async (dispatch) => {
+      // Simply hide the read receipt notification
+      await dispatch(
+        messagesSlice.actions.hideReadReceiptRequest({ id })
+      );
+    };
+  },
   selected({ id }) {
     // TODO: Do we still need this.
     return async () => {};
@@ -637,6 +645,12 @@ export const messagesSlice = RTK.createSlice({
         }
         return { ...msg, extraNotifications };
       });
+    },
+    hideReadReceiptRequest(state, { payload }) {
+      return modifyOnlyMsg(state, payload.id, (msg) => ({
+        ...msg,
+        hasReadReceiptRequest: false,
+      }));
     },
   },
 });

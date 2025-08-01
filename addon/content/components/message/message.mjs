@@ -370,9 +370,11 @@ export class Message extends React.PureComponent {
           dispatch: this.props.dispatch,
           extraNotifications: this.props.message.extraNotifications,
           hasRemoteContent: this.props.message.hasRemoteContent,
+          hasReadReceiptRequest: this.props.message.hasReadReceiptRequest,
           isPhishing: this.props.message.isPhishing,
           isOutbox: this.props.message.isOutbox,
           id: this.props.message.id,
+          readReceiptTo: this.props.message.readReceiptTo,
           realFrom: this.props.message.realFrom,
         }),
       React.createElement(

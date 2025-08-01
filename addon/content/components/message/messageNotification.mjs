@@ -202,6 +202,36 @@ function PhishingNotification({ dispatch, id }) {
 }
 
 /**
+ * Handles display of the read receipt request notification bar.
+ *
+ * @param {object} options
+ * @param {Function} options.dispatch
+ * @param {number} options.id
+ * @param {string} options.readReceiptTo
+ */
+function ReadReceiptNotification({ dispatch, id, readReceiptTo }) {
+  function onClose() {
+    dispatch(messageActions.ignoreReadReceiptRequest({ id }));
+  }
+
+  return React.createElement(
+    "div",
+    { className: "readReceiptBar notificationBar" },
+    React.createElement(
+      "div",
+      { className: "readReceiptContent" },
+      React.createElement(SvgIcon, { hash: "info" }),
+      browser.i18n.getMessage("notification.readReceiptMsg", [readReceiptTo])
+    ),
+    React.createElement(
+      "button",
+      { className: "readReceiptClose", onClick: onClose, title: "Close" },
+      "✕"
+    )
+  );
+}
+
+/**
  * Handles display of message notification bars for a message.
  *
  * @param {object} options
@@ -209,9 +239,11 @@ function PhishingNotification({ dispatch, id }) {
  * @param {Function} options.dispatch
  * @param {object[]} options.extraNotifications
  * @param {boolean} options.hasRemoteContent
+ * @param {boolean} options.hasReadReceiptRequest
  * @param {boolean} options.isPhishing
  * @param {boolean} options.isOutbox
  * @param {number} options.id
+ * @param {string} options.readReceiptTo
  * @param {string} options.realFrom
  */
 export function MessageNotification({
@@ -219,13 +251,22 @@ export function MessageNotification({
   dispatch,
   extraNotifications,
   hasRemoteContent,
+  hasReadReceiptRequest,
   isPhishing,
   isOutbox,
   id,
+  readReceiptTo,
   realFrom,
 }) {
   if (isPhishing) {
     return React.createElement(PhishingNotification, { dispatch, id });
+  }
+  if (hasReadReceiptRequest) {
+    return React.createElement(ReadReceiptNotification, {
+      dispatch,
+      id,
+      readReceiptTo
+    });
   }
   if (hasRemoteContent) {
     return React.createElement(RemoteContentNotification, {

@@ -102,6 +102,9 @@ export class MessageEnricher {
               summary.prefs.extraAttachments
             );
           }
+          
+          // Always check for read receipt requests regardless of getFullRequired
+          await this._checkReadReceiptRequest(message, msg);
           this._adjustSnippetForBugzilla(message, msg);
           await this._setDates(msg, summary);
         } catch (ex) {
@@ -467,6 +470,8 @@ export class MessageEnricher {
       );
     }
 
+    // Read receipt detection is now handled in _checkReadReceiptRequest method
+
     function checkPart(msgPart) {
       switch (msgPart.contentType) {
         case "text/html":
@@ -705,6 +710,38 @@ export class MessageEnricher {
         date.getTime()
       );
       msg.fullDate = this.dateAsInMessageList(date);
+    }
+  }
+
+  /**
+   * Always check for read receipt requests by getting full message details
+   * specifically to check headers.
+   *
+   * @param {object} message
+   *   The message to check for read receipt requests.
+   * @param {object} msg
+   *   The enriched message object to update.
+   */
+  async _checkReadReceiptRequest(message, msg) {
+    try {
+      const fullMsg = await browser.messages.getFull(message.id);
+      
+      // Check for read receipt request (try different case variations)
+      const readReceiptHeaders = [
+        "disposition-notification-to",
+        "Disposition-Notification-To",
+        "DISPOSITION-NOTIFICATION-TO"
+      ];
+      
+      for (const headerName of readReceiptHeaders) {
+        if (headerName in fullMsg.headers) {
+          msg.hasReadReceiptRequest = true;
+          msg.readReceiptTo = fullMsg.headers[headerName][0];
+          break;
+        }
+      }
+    } catch (error) {
+      console.error("Error checking read receipt request:", error);
     }
   }
 }

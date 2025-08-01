@@ -430,6 +430,57 @@
     }
   },
 
+  "notification.readReceiptMsg": {
+    "message": "$fromEmail$ has asked to be notified when you read this message.",
+    "description": "Message shown when a read receipt is requested.",
+    "placeholders": {
+      "fromEmail": {
+        "content": "$1",
+        "example": "sender@example.com"
+      }
+    }
+  },
+
+  "notification.sendReceipt": {
+    "message": "Send Receipt",
+    "description": "Button text to send a read receipt."
+  },
+
+  "notification.ignoreRequest": {
+    "message": "Ignore Request",
+    "description": "Button text to ignore a read receipt request."
+  },
+
+  "readReceipt.subject": {
+    "message": "Read Receipt: $subject$",
+    "description": "Subject line for read receipt messages.",
+    "placeholders": {
+      "subject": {
+        "content": "$1",
+        "example": "Original message subject"
+      }
+    }
+  },
+
+  "readReceipt.body": {
+    "message": "This is a read receipt for the message:\n\nSubject: $subject$\nFrom: $from$\n\nThis message was read on $date$.",
+    "description": "Body text for read receipt messages.",
+    "placeholders": {
+      "subject": {
+        "content": "$1",
+        "example": "Original message subject"
+      },
+      "from": {
+        "content": "$2",
+        "example": "sender@example.com"
+      },
+      "date": {
+        "content": "$3",
+        "example": "2025-01-01 10:00:00"
+      }
+    }
+  },
+
   "action.editDraft": {
     "message": "edit draft",
     "description": "Edit draft button name in the message more menu"

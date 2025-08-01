@@ -17,6 +17,15 @@ This modernized version includes significant improvements over the original:
 - **Modern Design Language**: Card-based layouts with subtle shadows and smooth animations
 - **Reduced Complexity**: Removed legacy theming options that caused display issues
 
+### 📨 Read Receipt Notifications (v4.3.6)
+
+Added native read receipt request detection and notification:
+
+- **Automatic Detection**: Detects `Disposition-Notification-To` headers in incoming messages
+- **Native Notification Bar**: Shows informational notification matching Thunderbird's design
+- **Simple Interface**: Clean single-line notification with close button
+- **Seamless Integration**: Uses native colors and styling consistent with other notification bars
+
 ### 🎨 Quick Filter Integration (v4.3.5)
 
 The conversation header has been enhanced to match Thunderbird's native Quick Filter appearance:

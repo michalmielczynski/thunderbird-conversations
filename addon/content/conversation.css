@@ -890,6 +890,49 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   background-color: #ed6666;
 }
 
+.readReceiptBar {
+  background-color: var(--layout-background-1);
+  border: 1px solid var(--layout-border-0);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  gap: 12px;
+}
+
+.readReceiptContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--layout-color-1);
+}
+
+.readReceiptContent .icon {
+  font-size: 1.1em !important;
+  color: light-dark(#4a90e2, #6bb3ff);
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+.readReceiptClose {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  font-size: 12px;
+  line-height: 1;
+  min-width: auto;
+  opacity: 0.7;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.readReceiptClose:hover {
+  opacity: 1;
+  background: var(--layout-background-2);
+}
+
 .notificationBar button {
   padding: 0 5px;
   margin: 0 3px 0 0;
