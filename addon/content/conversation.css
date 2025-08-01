@@ -845,10 +845,21 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   justify-content: center;
   line-height: 0; /* Needed, otherwise there's an extra padding at the bottom... */
   cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.attachmentThumb:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .attachmentThumb.deleted {
   cursor: auto;
+}
+
+.attachmentThumb.deleted:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .attachmentThumb img {

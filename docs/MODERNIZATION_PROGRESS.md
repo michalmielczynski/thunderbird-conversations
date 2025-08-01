@@ -77,7 +77,16 @@
 - **Code Cleanup**: Removed unused functions (`detachAttachment`, `deleteAttachment`, `handleDisplayMenu`)
 - **Component Removal**: Deleted `AttachmentMoreMenu` component and related state management
 
-### 12. **Extension Identity Update**
+### 12. **Enhanced Attachment Interaction**
+
+- **Fixed Attachment Thumbnail Clicks**: Restored click functionality for attachment thumbnails
+- **Smart Action Handling**: Images open in preview gallery, other files open with default application
+- **Improved Visual Feedback**: Added subtle hover effects with smooth transitions and shadow lift
+- **Proper Event Handling**: Enhanced click handlers with preventDefault and stopPropagation
+- **Better Accessibility**: Changed download button from `<a>` to `<button>` for semantic correctness
+- **Consistent UI**: Download action button maintains the same styling and behavior as other icon buttons
+
+### 13. **Extension Identity Update**
 
 - **Unique Add-on ID**: Changed from `gconversation@xulforum.org` to `thunderbird-conversations-modernized@michalmielczynski.dev`
 - **Updated Name**: Extension now called "Thunderbird Conversations (Modernized)"
@@ -85,6 +94,7 @@
 - **Updated Homepage**: Points to fork repository at `https://github.com/michalmielczynski/thunderbird-conversations`
 - **Author Attribution**: Credits both original author and modernization work
 - **README Overhaul**: Clear indication this is a modernized fork with feature highlights and proper attribution
+- **Version Bump**: Updated to v4.3.3 reflecting attachment interaction improvements
 
 ## 📁 Key Modified Files
 
@@ -92,10 +102,10 @@
 - `addon/manifest.json` - Updated identity, author, and homepage
 - `addon/_locales/en/messages.json` - Updated extension name and description
 
-- `addon/content/conversation.css` - Main stylesheet overhauled
+- `addon/content/conversation.css` - Main stylesheet overhauled, enhanced attachment hover effects
 - `addon/content/components/message/messageHeader.mjs` - Star removal, avatar simplification
 - `addon/content/components/message/message.mjs` - Footer and QuickReply removal
-- `addon/content/components/message/attachments.mjs` - Simplified attachment actions and UI
+- `addon/content/components/message/attachments.mjs` - Enhanced attachment interaction, proper event handling
 - `addon/content/components/message/messageHeaderOptions.mjs` - Three-dots menu removal
 - `addon/content/reducer/reducerSummary.mjs` - State defaults simplified
 - `addon/background/prefs.mjs` - Default preferences cleaned up

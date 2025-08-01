@@ -59,10 +59,23 @@ function Attachment({
 }) {
 
 
-  function preview() {
+  function preview(event) {
+    event.preventDefault();
+    event.stopPropagation();
     dispatch(
       attachmentActions.previewAttachment({
         name,
+        id,
+        partName,
+      })
+    );
+  }
+
+  function openAttachment(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    dispatch(
+      attachmentActions.openAttachment({
         id,
         partName,
       })
@@ -96,7 +109,9 @@ function Attachment({
   //   event.stopPropagation();
   // }
 
-  function downloadAttachment() {
+  function downloadAttachment(event) {
+    event.preventDefault();
+    event.stopPropagation();
     dispatch(
       attachmentActions.downloadAttachment({
         id,
@@ -164,7 +179,7 @@ function Attachment({
         {
           className: "attachmentThumb",
           draggable: "false",
-          onClick: isImage ? preview : null,
+          onClick: isImage ? preview : openAttachment,
         },
         React.createElement("img", {
           className: imgClass,
@@ -182,11 +197,12 @@ function Attachment({
           "div",
           { className: "attachActions" },
           React.createElement(
-            "a",
+            "button",
             {
               className: "icon-link download-attachment",
               title: browser.i18n.getMessage("attachments.download.tooltip"),
               onClick: downloadAttachment,
+              type: "button",
             },
             React.createElement(SvgIcon, { hash: "file_download" })
           )
