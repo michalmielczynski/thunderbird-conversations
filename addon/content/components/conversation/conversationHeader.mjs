@@ -203,7 +203,7 @@ class _ConversationHeader extends React.PureComponent {
               title: browser.i18n.getMessage("message.read.tooltip"),
               onClick: this.toggleRead,
             },
-            React.createElement(SvgIcon, { ariaHidden: true, hash: "new" })
+            React.createElement(SvgIcon, { ariaHidden: true, hash: "mail" })
           ),
           React.createElement(
             "button",
@@ -243,7 +243,7 @@ class _ConversationHeader extends React.PureComponent {
               },
               React.createElement(SvgIcon, {
                 ariaHidden: true,
-                hash: "whatshot",
+                hash: "warning",
               })
             ),
           React.createElement(
