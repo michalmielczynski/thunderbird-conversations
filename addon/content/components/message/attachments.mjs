@@ -106,15 +106,44 @@ function Attachment({
     handleAttachmentClick = isImage ? preview : openAttachment;
   }
 
+  // Helper function to determine file type icon based on content type
+  function getFileTypeIcon(contentType) {
+    if (contentType.startsWith("image/")) {
+      return "image";
+    } else if (contentType.startsWith("audio/")) {
+      return "audio_file";
+    } else if (contentType.startsWith("video/")) {
+      return "movie";
+    } else if (contentType.includes("pdf")) {
+      return "picture_as_pdf";
+    } else if (contentType.includes("html") || contentType.includes("xml")) {
+      return "code";
+    } else if (contentType.includes("text/")) {
+      return "description";
+    } else if (contentType.includes("zip") || contentType.includes("compressed")) {
+      return "folder_zip";
+    } else {
+      return "insert_drive_file";
+    }
+  }
+
   // TODO: Drag n drop
   // onDragStart={this.onDragStart}
   return React.createElement(
     "li",
-    { 
+    {
       className: `attachment ${isDeleted ? 'deleted' : 'clickable'}`,
       onClick: handleAttachmentClick,
       title: !isDeleted ? attachmentTitle : undefined
     },
+    React.createElement(
+      "div",
+      { className: "attachment-type-icon" },
+      React.createElement(
+        SvgIcon,
+        { hash: getFileTypeIcon(contentType) }
+      )
+    ),
     React.createElement(
       "div",
       { className: "attachmentInfo" },
@@ -157,6 +186,11 @@ export function Attachments({ dispatch, attachments, attachmentsPlural, id }) {
   return React.createElement(
     "ul",
     { className: "attachments" },
+    attachments.length > 0 && React.createElement(
+      "div",
+      { className: "attachHeader" },
+      attachmentsPlural
+    ),
     attachments.map((attachment) =>
       React.createElement(Attachment, {
         anchor: attachment.anchor,
