@@ -353,6 +353,92 @@ export function MessageHeader({
     extraContacts = React.createElement(React.Fragment);
   }
 
+  // For collapsed messages, use two-row layout like Thunderbird's native inbox
+  if (!expanded) {
+    return React.createElement(
+      "div",
+      {
+        className: "messageHeader collapsed-two-row",
+        onClick: onClickHeader,
+      },
+      // Row 1: Author info, tags, and date/options
+      React.createElement(
+        "div",
+        { className: "header-row-1" },
+        React.createElement(
+          "div",
+          { className: "author-info" },
+          !!from &&
+            React.createElement(
+              React.Fragment,
+              null,
+              React.createElement(Avatar, {
+                url: from.avatar,
+                style: from.colorStyle,
+                initials: from.initials,
+              }),
+              " ",
+              React.createElement(ContactLabel, {
+                className: "author",
+                contact: from,
+                msgId: id,
+              })
+            ),
+          React.createElement(MessageTags, {
+            onTagsChange: (newTags) => {
+              dispatch(
+                messageActions.setTags({
+                  id,
+                  tags: newTags,
+                })
+              );
+            },
+            expanded: false,
+            tags,
+          }),
+          React.createElement(SpecialMessageTags, {
+            onTagClick: (event, tag) => {
+              dispatch(
+                messageActions.tagClick({
+                  event,
+                  id,
+                  details: tag.details,
+                })
+              );
+            },
+            folderName: shortFolderName,
+            inView,
+            specialTags,
+          })
+        ),
+        React.createElement(MessageHeaderOptions, {
+          dispatch,
+          overrideDarkMode,
+          date,
+          detailsShowing,
+          expanded,
+          fullDate,
+          id,
+          attachments,
+          multipleRecipients,
+          recipientsIncludeLists,
+          isDraft,
+        })
+      ),
+      // Row 2: Subject/snippet only
+      React.createElement(
+        "div",
+        { className: "header-row-2" },
+        React.createElement(
+          "span",
+          { className: "snippet" },
+          snippet
+        )
+      )
+    );
+  }
+
+  // For expanded messages, keep the original layout
   return React.createElement(
     "div",
     {

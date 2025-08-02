@@ -511,6 +511,45 @@ a img {
   border-bottom: none;
 }
 
+/* Two-row layout for collapsed messages */
+.messageHeader.collapsed-two-row {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  padding: 8px 16px;
+  min-height: auto;
+}
+
+.messageHeader.collapsed-two-row .header-row-1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.messageHeader.collapsed-two-row .author-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0; /* Allow text truncation */
+}
+
+.messageHeader.collapsed-two-row .header-row-2 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding-left: 32px; /* Align with author text, accounting for avatar */
+}
+
+.messageHeader.collapsed-two-row .header-row-2 .snippet {
+  font-size: 0.9rem;
+  line-height: 1.3;
+  color: var(--layout-color-2);
+  flex: 1;
+}
+
 .mainActionButton > .icon-link,
 .dropDown > .icon-link,
 .attachmentsDropDown > .icon-link,
