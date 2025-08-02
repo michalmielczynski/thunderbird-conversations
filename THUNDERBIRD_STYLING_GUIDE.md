@@ -273,6 +273,326 @@ font: message-box;
 font-family: 'Custom Font', sans-serif;
 ```
 
+## Conversation Header Implementation
+
+The conversation header demonstrates a complete implementation of native Thunderbird styling patterns, including the icon system, button styling, and tag styling that seamlessly integrates with Thunderbird's native appearance.
+
+### Conversation Header Architecture
+
+The conversation header consists of several key components that work together to provide native Thunderbird styling:
+
+1. **SvgIcon Component** - Handles icon rendering with proper `-moz-context-properties` support
+2. **Quick Filter Button Styling** - Matches Thunderbird's native Quick Filter button appearance exactly
+3. **Button Group Layout** - Seamless button grouping with shared borders
+4. **Tag System** - Native Thunderbird tag button styling with pill-shaped appearance
+
+### SvgIcon Component with Native Styling
+
+The [`SvgIcon`](addon/content/components/svgIcon.mjs) component provides consistent icon rendering with full Thunderbird native styling support:
+
+```javascript
+export function SvgIcon({ fullPath, hash, ariaHidden = false, fillOnly = false }) {
+  fullPath = fullPath || `material-icons.svg#${hash}`;
+  
+  // Build style object for Thunderbird native icon styling
+  const iconStyle = {
+    "--icon-size": "18px",
+    "-moz-context-properties": fillOnly ? "fill" : "fill, stroke",
+    "fill": "color-mix(in srgb, currentColor 20%, transparent)",
+  };
+  
+  // Only add stroke if not fill-only
+  if (!fillOnly) {
+    iconStyle.stroke = "currentColor";
+  }
+  
+  return React.createElement("svg", {
+    "aria-hidden": ariaHidden,
+    className: "icon",
+    viewBox: "0 0 24 24",
+    style: iconStyle,
+  }, React.createElement("use", {
+    xlinkHref: `icons/${fullPath}`,
+  }));
+}
+```
+
+**Key Features:**
+- **18px icon size** - Standard Thunderbird icon size for toolbar buttons
+- **Context-aware properties** - Uses `-moz-context-properties: fill, stroke` for theme adaptation
+- **Semi-transparent fill** - `color-mix(in srgb, currentColor 20%, transparent)` for subtle icon appearance
+- **Current color stroke** - Ensures icons adapt to text color changes
+- **Flexible fill/stroke** - `fillOnly` parameter for icons that don't need stroke
+
+### Native Quick Filter Button Implementation
+
+The conversation header buttons use the [`quickfilter-btn`](addon/content/conversation.css:321) class to match Thunderbird's native Quick Filter appearance exactly:
+
+```css
+.actions .quickfilter-btn {
+  --icon-size: 18px;
+  appearance: none;
+  background-color: var(--button-background-color);
+  color: currentColor;
+  border: var(--button-border-size) solid var(--button-border-color);
+  border-radius: 0;
+  padding: var(--button-padding);
+  min-width: 28px;
+  height: 28px;
+  -moz-context-properties: fill, stroke;
+  fill: color-mix(in srgb, currentColor 20%, transparent);
+  stroke: currentColor;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
+  @media (prefers-reduced-motion: no-preference) {
+    transition: background-color .15s, border-color .15s;
+  }
+}
+```
+
+**Implementation Details:**
+- **Sharp corners** - `border-radius: 0` matches Thunderbird's preference for sharp edges
+- **28px dimensions** - Standard Thunderbird toolbar button size (28x28px)
+- **Native variables** - Uses `--button-background-color` and `--button-border-color` for theme consistency
+- **Icon integration** - Direct `-moz-context-properties` support for embedded icons
+- **Smooth transitions** - Respects `prefers-reduced-motion` for accessibility
+
+### Button Group Styling with Seamless Borders
+
+The conversation header implements seamless button groups where borders are shared between adjacent buttons:
+
+```css
+/* Button group styling - seamless borders */
+.actions .quickfilter-btn:first-child {
+  border-inline-end: none;
+  border-start-start-radius: calc(var(--button-border-radius, 3px) - 1px);
+  border-end-start-radius: calc(var(--button-border-radius, 3px) - 1px);
+}
+
+.actions .quickfilter-btn:last-child {
+  border-start-end-radius: calc(var(--button-border-radius, 3px) - 1px);
+  border-end-end-radius: calc(var(--button-border-radius, 3px) - 1px);
+}
+
+.actions .quickfilter-btn + .quickfilter-btn {
+  border-inline-start: none;
+}
+
+.actions {
+  display: inline-flex;
+  border-radius: var(--button-border-radius, 3px);
+  margin-left: auto;
+  isolation: isolate;
+}
+```
+
+**Key Features:**
+- **Shared borders** - Adjacent buttons share borders to prevent double-border appearance
+- **Corner radius only on ends** - Only first and last buttons have rounded corners (3px)
+- **Logical properties** - Uses `border-inline-start/end` for RTL language support
+- **Isolation context** - `isolation: isolate` prevents z-index issues
+
+### Interactive States
+
+All buttons implement consistent interactive states that match Thunderbird's native behavior:
+
+```css
+.actions .quickfilter-btn:hover {
+  background-color: var(--toolbar-button-hover-background-color);
+}
+
+.actions .quickfilter-btn:active {
+  background-color: var(--toolbar-button-active-background-color);
+}
+
+.actions .quickfilter-btn.active {
+  background-color: var(--toolbar-button-hover-background-color);
+}
+
+.actions .quickfilter-btn:focus-visible {
+  outline: 2px solid var(--focus-outline-color, Highlight);
+  outline-offset: -2px;
+  z-index: 3;
+}
+```
+
+**State Management:**
+- **Hover state** - Uses `color-mix()` for consistent transparency overlay
+- **Active state** - Slightly darker than hover for pressed appearance
+- **Focus state** - High-contrast outline for keyboard navigation
+- **Active button state** - Persistent highlight for toggled buttons (like read/unread)
+
+### Native Tag Button Styling
+
+Tags in the conversation use pill-shaped styling that matches Thunderbird's native tag buttons with **transparent backgrounds and colored borders**:
+
+```css
+.tags li {
+  --tag-color: currentColor;
+  --tag-contrast-color: currentColor;
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 3px 9px;
+  margin-inline-end: 6px;
+  border-radius: 100px;
+  background-color: transparent;
+  color: var(--tag-color);
+  border: 1px solid var(--tag-color);
+  min-height: 0;
+  min-width: 0;
+  transition: background-color 0.15s ease;
+}
+
+.tags li:hover {
+  background-color: color-mix(in srgb, var(--tag-color) 20%, transparent);
+}
+```
+
+**Tag Styling Features:**
+- **Pill shape** - `border-radius: 100px` creates perfect pill appearance matching native Thunderbird tags
+- **Transparent background** - `background-color: transparent` - only colored border and text, no fill
+- **Colored border and text** - Both border and text use the tag's color via `--tag-color`
+- **Hover effect** - Semi-transparent background on hover using `color-mix()` for subtle feedback
+- **Compact padding** - `3px 9px` for tight, native appearance
+
+### Special Tags Implementation
+
+Special tags (like encryption status, attachments, etc.) use the same transparent background pattern:
+
+```css
+.tags.special-tags li {
+  --tag-color: light-dark(#4a5568, #e2e8f0);
+  background-color: transparent;
+  color: var(--tag-color);
+  border: 1px solid var(--tag-color);
+  border-radius: 100px;
+  padding: 3px 9px;
+  line-height: 1;
+}
+
+.tags.special-tags li:hover {
+  background-color: color-mix(in srgb, var(--tag-color) 20%, transparent);
+}
+```
+
+**Special Tag Features:**
+- **Theme-aware colors** - Uses `light-dark()` for automatic theme adaptation
+- **Consistent transparent appearance** - Same pill shape and transparent background as regular tags
+- **Icon integration** - Works seamlessly with [`SvgIcon`](addon/content/components/svgIcon.mjs) component
+- **Interactive feedback** - Hover states for clickable special tags
+
+### Key CSS Variables Used in Conversation Header
+
+The conversation header implementation leverages a comprehensive set of CSS variables that ensure consistent theming and native Thunderbird appearance:
+
+#### Button System Variables
+```css
+/* Core button styling */
+--button-background-color: light-dark(#e4e4e7, #52525b);
+--button-border-color: light-dark(#a1a1aa, #71717a);
+--button-border-size: 1px;
+--button-padding: 6px;
+--button-border-radius: 3px;
+
+/* Interactive states */
+--toolbar-button-hover-background-color: color-mix(in srgb, currentColor 17%, transparent);
+--toolbar-button-active-background-color: color-mix(in srgb, currentColor 30%, transparent);
+
+/* Focus states */
+--focus-outline-color: AccentColor;
+--focus-outline: 2px solid var(--focus-outline-color, Highlight);
+--focus-outline-offset: 2px;
+```
+
+#### Icon System Variables
+```css
+/* Icon sizing and properties */
+--icon-size: 18px;
+-moz-context-properties: fill, stroke;
+fill: color-mix(in srgb, currentColor 20%, transparent);
+stroke: currentColor;
+```
+
+#### Layout and Color Variables
+```css
+/* Enhanced Thunderbird Native Color System */
+--layout-background-0: light-dark(#ffffff, #18181b);
+--layout-background-1: light-dark(#fafafa, #27272a);
+--layout-color-1: light-dark(#18181b, #f4f4f5);
+--layout-color-2: light-dark(#3f3f46, #d4d4d8);
+--layout-border-0: light-dark(#d4d4d8, #3f3f46);
+```
+
+### Implementation Patterns
+
+#### 1. Theme-Aware Color Functions
+The implementation extensively uses modern CSS functions for automatic theme adaptation:
+
+```css
+/* light-dark() for automatic theme switching */
+--button-background-color: light-dark(#e4e4e7, #52525b);
+
+/* color-mix() for consistent state variations */
+background-color: color-mix(in srgb, currentColor 17%, transparent);
+
+/* AccentColor for system integration */
+--focus-outline-color: AccentColor;
+```
+
+#### 2. Sharp Corner Design Philosophy
+Following Thunderbird's design language, the implementation uses sharp corners:
+
+```css
+/* Sharp corners for buttons (Thunderbird preference) */
+border-radius: 0;
+
+/* Only button groups get subtle corner radius */
+border-radius: var(--button-border-radius, 3px);
+```
+
+#### 3. Consistent Icon Integration
+All icons use the same pattern for theme-aware rendering:
+
+```css
+.icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  -moz-context-properties: fill, stroke;
+  fill: color-mix(in srgb, currentColor 20%, transparent);
+  stroke: currentColor;
+}
+```
+
+#### 4. Accessibility-First Interactive States
+All interactive elements include proper focus management:
+
+```css
+.quickfilter-btn:focus-visible {
+  outline: 2px solid var(--focus-outline-color, Highlight);
+  outline-offset: -2px;
+  z-index: 3;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  transition: background-color .15s, border-color .15s;
+}
+```
+
+### Migration Benefits
+
+The conversation header implementation demonstrates several key benefits of native Thunderbird styling:
+
+1. **Automatic Theme Adaptation** - All colors automatically adapt to light/dark themes
+2. **System Integration** - Uses system accent colors when available
+3. **Accessibility Compliance** - Proper focus states and reduced motion support
+4. **Performance** - Leverages CSS variables for efficient theme switching
+5. **Maintainability** - Centralized color system makes updates easier
+6. **Consistency** - Matches native Thunderbird UI patterns exactly
+
 ## Code Examples
 
 ### Complete Quick Filter Button Implementation

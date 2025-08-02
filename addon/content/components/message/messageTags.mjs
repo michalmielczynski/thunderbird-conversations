@@ -35,7 +35,7 @@ export function MessageTag({ onClickX, expanded, name, color }) {
     "li",
     {
       className: "tag" + (isLight ? " light-tag" : ""),
-      style: { backgroundColor: color },
+      style: { "--tag-color": color },
     },
     name,
     expanded &&

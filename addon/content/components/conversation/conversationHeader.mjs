@@ -212,26 +212,10 @@ class _ConversationHeader extends React.PureComponent {
               title: browser.i18n.getMessage("message.expand.tooltip"),
               onClick: this.expandCollapse,
             },
-            React.createElement(
-              "svg",
-              {
-                className: `icon expand ${
-                  this.areSomeMessagesCollapsed ? "" : "collapse"
-                }`,
-                "aria-hidden": true,
-                viewBox: "0 0 24 24",
-                xmlns: "http://www.w3.org/2000/svg",
-                xmlnsXlink: "http://www.w3.org/1999/xlink",
-              },
-              React.createElement("use", {
-                className: "expand-more",
-                xlinkHref: "icons/material-icons.svg#expand_more",
-              }),
-              React.createElement("use", {
-                className: "expand-less",
-                xlinkHref: "icons/material-icons.svg#expand_less",
-              })
-            )
+            React.createElement(SvgIcon, {
+              ariaHidden: true,
+              hash: this.areSomeMessagesCollapsed ? "expand_more" : "expand_less",
+            })
           ),
           this.canJunk &&
             React.createElement(

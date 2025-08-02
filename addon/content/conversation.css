@@ -55,10 +55,10 @@
   --box-shadow-card-hover: var(--box-shadow-level-4);
   --box-shadow-popup: var(--box-shadow-level-3);
   
-  /* Border Radius System */
-  --border-radius-small: 4px;
-  --border-radius-medium: 8px;
-  --border-radius-large: 12px;
+  /* Border Radius System - Thunderbird prefers sharp corners */
+  --border-radius-small: 0;
+  --border-radius-medium: 0;
+  --border-radius-large: 0;
   --border-radius-circle: 9999px;
   
   /* Enhanced Semantic Colors */
@@ -114,7 +114,7 @@
   /* Native spacing and typography */
   --message-spacing: 0;
   --message-padding: 12px 16px;
-  --border-radius: var(--border-radius-small);
+  --border-radius: 0;
   --native-font: -moz-default;
   
   /* Focus and Interaction */
@@ -198,13 +198,17 @@ a img {
 
 .icon {
   display: inline-block;
-  fill: currentColor;
-  height: 1.5em;
+  width: var(--icon-size, 18px);
+  height: var(--icon-size, 18px);
   vertical-align: -0.4em;
   pointer-events: none;
+  -moz-context-properties: fill, stroke;
+  fill: color-mix(in srgb, currentColor 20%, transparent);
+  stroke: currentColor;
 }
 .icon.active {
-  fill: #3079e0;
+  fill: color-mix(in srgb, var(--selected-item-color, #0060df) 20%, transparent);
+  stroke: var(--selected-item-color, #0060df);
 }
 
 .icon-link {
@@ -249,10 +253,10 @@ a img {
 .showhidesig.icon-link {
   min-width: auto !important;
   min-height: 24px !important;
-  padding: 4px 6px !important;
+  padding: 6px 8px !important;
   border: 1px solid transparent !important;
-  border-radius: 3px !important;
-  gap: 2px;
+  border-radius: 0 !important;
+  gap: 6px;
   font-size: 0.85rem;
   color: var(--layout-color-2);
   background: transparent !important;
@@ -287,13 +291,14 @@ a img {
   left: 0;
   width: 100%;
   z-index: 150;
-  box-shadow: var(--box-shadow-level-1);
+  border-radius: 0;
 }
 
 .conversationHeader {
   padding: 8px 12px;
   background-color: var(--layout-background-1);
   border-bottom: 1px solid var(--layout-border-0);
+  border-radius: 0;
   color: var(--layout-color-1);
   display: flex;
   flex-direction: row;
@@ -315,56 +320,43 @@ a img {
 /* Native Thunderbird Quick Filter button styling */
 .actions .quickfilter-btn {
   --icon-size: 18px;
-  --button-margin: 0;
   appearance: none;
   background-color: var(--button-background-color);
   color: currentColor;
   border: var(--button-border-size) solid var(--button-border-color);
   border-radius: 0;
   padding: var(--button-padding);
-  margin: 0;
-  margin-block: 2px;
   min-width: 28px;
   height: 28px;
   -moz-context-properties: fill, stroke;
   fill: color-mix(in srgb, currentColor 20%, transparent);
   stroke: currentColor;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  position: relative;
-  z-index: 2;
-
+  
   @media (prefers-reduced-motion: no-preference) {
     transition: background-color .15s, border-color .15s;
   }
 }
 
-.actions .quickfilter-btn:not([disabled="true"]):hover {
-  color: var(--button-hover-text-color, currentColor);
+.actions .quickfilter-btn:hover {
   background-color: var(--toolbar-button-hover-background-color);
-  border-color: var(--button-border-color);
 }
 
 .actions .quickfilter-btn:active {
   background-color: var(--toolbar-button-active-background-color);
 }
 
-.actions .quickfilter-btn.active,
-.actions .quickfilter-btn[aria-pressed="true"] {
-  color: var(--button-hover-text-color, currentColor);
+.actions .quickfilter-btn.active {
   background-color: var(--toolbar-button-hover-background-color);
-  border-color: var(--button-border-color);
 }
 
-.actions .quickfilter-btn.active:hover,
-.actions .quickfilter-btn[aria-pressed="true"]:hover {
-  background-color: var(--toolbar-button-active-background-color);
+.actions .quickfilter-btn:focus-visible {
+  outline: 2px solid var(--focus-outline-color, Highlight);
+  outline-offset: -2px;
+  z-index: 3;
 }
 
 .actions .quickfilter-btn .icon {
@@ -375,12 +367,7 @@ a img {
   -moz-context-properties: fill, stroke;
 }
 
-/* Button group styling within .actions container */
-.actions .quickfilter-btn:focus-visible {
-  outline-offset: 0;
-  z-index: 3;
-}
-
+/* Button group styling - seamless borders */
 .actions .quickfilter-btn:first-child {
   border-inline-end: none;
   border-start-start-radius: calc(var(--button-border-radius, 3px) - 1px);
@@ -392,10 +379,6 @@ a img {
   border-end-end-radius: calc(var(--button-border-radius, 3px) - 1px);
 }
 
-.actions .quickfilter-btn + .quickfilter-btn:not(:last-child) {
-  border-inline-start: none;
-}
-
 .actions .quickfilter-btn + .quickfilter-btn {
   border-inline-start: none;
 }
@@ -403,20 +386,9 @@ a img {
 /* Button Group Styles - match Thunderbird's native Quick Filter appearance */
 .actions {
   display: inline-flex;
-  color: var(--button-text-color);
   border-radius: var(--button-border-radius, 3px);
-  margin: var(--button-margin, 0);
   margin-left: auto;
-  position: relative;
   isolation: isolate;
-  z-index: 1;
-  background-color: var(--layout-background-2);
-}
-
-.actions .quickfilter-btn:focus-visible {
-  z-index: 3;
-  outline: var(--focus-outline, 2px solid var(--focus-outline-color, Highlight));
-  outline-offset: var(--focus-outline-offset, -2px);
 }
 
 /* Keep the old button styling for any non-quickfilter buttons */
@@ -456,11 +428,11 @@ a img {
 
 .message {
   margin: 0 0 4px 0;
-  border: 1px solid var(--border-color-card);
-  border-radius: var(--border-radius-medium);
+  border: 1px solid var(--layout-border-0);
+  border-radius: 6px;
   list-style-type: none;
-  background-color: var(--background-color-box);
-  box-shadow: var(--box-shadow-card);
+  background-color: var(--layout-background-0);
+  box-shadow: 0 1px 3px light-dark(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.12));
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   color: var(--layout-color-1);
@@ -488,17 +460,17 @@ a img {
 
 .messageHeader {
   margin: 0;
-  padding: 14px 16px;
+  padding: 12px 16px;
   line-height: 1.4;
   cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   border: none;
-  border-bottom: 1px solid var(--border-color-deemphasized);
+  border-bottom: 1px solid var(--layout-border-0);
   background-color: var(--layout-background-0);
-  border-radius: var(--border-radius-medium) var(--border-radius-medium) 0 0;
+  border-radius: 6px 6px 0 0;
   color: var(--layout-color-1);
 }
 
@@ -509,7 +481,7 @@ a img {
 
 /* For collapsed messages (not expanded), round all corners and remove border-bottom */
 .message:not(:has(.messageHeader.expanded)) .messageHeader {
-  border-radius: var(--border-radius-medium);
+  border-radius: 6px;
   border-bottom: none;
 }
 
@@ -532,7 +504,7 @@ a img {
   gap: 6px;
   margin-left: auto;
   padding: 4px 8px;
-  border-radius: 6px;
+  border-radius: 0;
   background-color: transparent;
   border: none;
   transition: all 0.15s ease;
@@ -594,15 +566,11 @@ a img {
   max-width: 20rem;
   background-color: var(--layout-background-0);
   color: var(--layout-color-1);
-  border: 1px solid light-dark(rgba(0, 0, 0, 0.12), rgba(255, 255, 255, 0.12));
-  border-radius: 8px;
-  box-shadow: 
-    0 4px 16px light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.24)),
-    0 2px 4px light-dark(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.16));
+  border: 1px solid var(--layout-border-0);
+  border-radius: 6px;
+  box-shadow: 0 10px 20px light-dark(rgba(0, 0, 0, 0.19), rgba(0, 0, 0, 0.38));
   z-index: 1000;
   line-height: 1.4;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 }
 
 html[dir="rtl"] .tooltip {
@@ -622,17 +590,17 @@ html[dir="rtl"] .tooltip {
 
 .options > .date {
   padding: 2px 6px;
-  background-color: light-dark(rgba(156, 163, 175, 0.08), rgba(156, 163, 175, 0.12));
-  border-radius: 4px;
-  border: 1px solid light-dark(rgba(156, 163, 175, 0.12), rgba(156, 163, 175, 0.15));
+  background-color: var(--layout-background-2);
+  border-radius: 0;
+  border: 1px solid var(--layout-border-0);
   font-size: 0.85rem;
   color: var(--layout-color-2);
   transition: all 0.15s ease;
 }
 
 .options > .date:hover {
-  background-color: light-dark(rgba(156, 163, 175, 0.12), rgba(156, 163, 175, 0.18));
-  border-color: light-dark(rgba(156, 163, 175, 0.18), rgba(156, 163, 175, 0.25));
+  background-color: var(--layout-background-3);
+  border-color: var(--layout-border-1);
 }
 
 .dropDown,
@@ -649,7 +617,7 @@ html[dir="rtl"] .tooltip {
   border: none;
   background: transparent;
   color: var(--layout-color-1);
-  border-radius: 6px;
+  border-radius: 0;
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   font-size: 0.9rem;
@@ -813,7 +781,7 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   font-size: 1.2rem;
   text-indent: 0;
   min-width: 20rem;
-  padding: 10px;
+  padding: 12px;
 }
 
 .authorLinks {
@@ -834,18 +802,18 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   width: 100%;
   color: var(--layout-color-2);
   overflow: hidden;
-  padding-top: 2px;
+  padding-top: 6px;
 }
 
 .authorEmailAddress {
   text-overflow: ellipsis;
   overflow: hidden;
-  margin-inline-end: 5px;
+  margin-inline-end: 8px;
 }
 
 .authorPicture {
   max-width: 100px;
-  padding: 10px;
+  padding: 12px;
 }
 
 .authorPicture img {
@@ -855,20 +823,20 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 
 .tipFooter {
   width: 100%;
-  padding: 5px 10px;
-  background-color: rgba(160, 160, 160, 0.1);
-  border-top: 1px solid var(--border-color);
+  padding: 8px 12px;
+  background-color: var(--layout-background-2);
+  border-top: 1px solid var(--layout-border-0);
   float: inline-start;
-  border-radius: 0 0 5px 5px;
+  border-radius: 0;
 }
 
 .tipFooter button {
-  padding: 0 5px;
+  padding: 6px 8px;
   float: inline-start;
-  margin: 0 3px 0 0;
-  border: 1px solid var(--border-color);
-  height: 1.86em;
-  border-radius: 7px;
+  margin: 0 6px 0 0;
+  border: 1px solid var(--layout-border-0);
+  height: auto;
+  border-radius: 0;
 }
 
 .message:not(.bugzilla) .bzTo {
@@ -885,7 +853,7 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   font-size: 0.9rem;
   line-height: 1.3;
   padding: 0;
-  margin-top: 2px;
+  margin-top: 6px;
   background-color: transparent;
   border-left: none;
   border-radius: 0;
@@ -934,17 +902,33 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 }
 
 .messageBody .tags li {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
 .tags li {
+  /* --tag-color is now set by JavaScript with the actual tag color */
+  --tag-contrast-color: currentColor;
   display: inline-block;
   font-size: 1rem;
-  line-height: 1.8;
-  padding: 0 0.9em;
-  margin-inline-end: 0.4rem;
-  border-radius: 0.9em;
-  color: #fff;
+  line-height: 1;
+  padding: 3px 9px;
+  margin-inline-end: 6px;
+  border-radius: 100px;
+  background-color: transparent;
+  color: var(--tag-color);
+  border: 1px solid var(--tag-color);
+  min-height: 0;
+  min-width: 0;
+  transition: background-color 0.15s ease;
+}
+
+.tags li:hover {
+  background-color: color-mix(in srgb, var(--tag-color) 20%, transparent);
+}
+
+/* Ensure special tags maintain their intended opacity */
+.tags.special-tags li {
+  opacity: 1;
 }
 
 .tag-x {
@@ -952,11 +936,11 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   cursor: pointer;
   text-align: center;
   font-weight: bold;
-  width: 1.8em;
-  margin-inline-end: -0.9em;
-  border-radius: 0.9em;
-  margin-inline-start: 0.5em;
-  background-color: rgba(255, 255, 255, 0.4);
+  width: 24px;
+  margin-inline-end: -12px;
+  border-radius: 0;
+  margin-inline-start: 8px;
+  background-color: var(--layout-background-3);
 }
 
 .messageHeader .tag-x {
@@ -964,11 +948,11 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 }
 
 .tags li.light-tag {
-  color: rgb(10, 10, 10);
+  color: var(--layout-color-0);
 }
 
 .tags li.light-tag .tag-x {
-  border: 1px solid black;
+  border: 1px solid var(--layout-border-0);
 }
 
 .tags.special-tags {
@@ -981,8 +965,18 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 }
 
 .tags.special-tags li {
-  background-color: light-dark(#e1e7f0, #4a5568);
-  color: light-dark(#4a5568, #e2e8f0);
+  /* Default color for special tags - can be overridden by specific tag classes */
+  --tag-color: light-dark(#4a5568, #e2e8f0);
+  background-color: transparent;
+  color: var(--tag-color);
+  border: 1px solid var(--tag-color);
+  border-radius: 100px;
+  padding: 3px 9px;
+  line-height: 1;
+}
+
+.tags.special-tags li:hover {
+  background-color: color-mix(in srgb, var(--tag-color) 20%, transparent);
 }
 
 .tags li.can-click {
@@ -994,11 +988,11 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 }
 
 .extraDetails > div {
-  margin: 15px;
+  margin: 16px;
 }
 
 .extraDetails > div > p {
-  margin: 1rem;
+  margin: 16px;
 }
 
 .in-folder {
@@ -1014,12 +1008,12 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 }
 
 .openpgpBar {
-  background-color: rgb(215, 0, 34);
-  color: white;
+  background-color: var(--color-danger-default);
+  color: var(--layout-color-0);
 }
 
 .phishingBar {
-  background-color: #ed6666;
+  background-color: var(--color-danger-default);
 }
 
 .readReceiptBar {
@@ -1043,14 +1037,14 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 
 .readReceiptContent .icon {
   font-size: 1.1em !important;
-  color: light-dark(#4a90e2, #6bb3ff);
+  color: var(--system-accent-color);
   opacity: 0.9;
   flex-shrink: 0;
 }
 
 .readReceiptClose {
   flex-shrink: 0;
-  padding: 2px 6px;
+  padding: 6px 8px;
   font-size: 12px;
   line-height: 1;
   min-width: auto;
@@ -1066,8 +1060,8 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 }
 
 .notificationBar button {
-  padding: 0 5px;
-  margin: 0 3px 0 0;
+  padding: 6px 8px;
+  margin: 0 6px 0 0;
 }
 
 .notificationBar a {
@@ -1120,7 +1114,7 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   gap: 8px;
   background-color: var(--layout-background-1);
   border: 1px solid var(--layout-border-0);
-  border-radius: var(--button-border-radius);
+  border-radius: 0;
   padding: 6px 12px;
   transition: background-color .15s, border-color .15s;
 }
@@ -1246,20 +1240,47 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   display: none;
 }
 
-/* General pills */
+/* General pills - Native Thunderbird pattern */
 .special-tag.success {
-  background-color: light-dark(#d1fae5, #065f46) !important;
-  color: light-dark(#065f46, #d1fae5) !important;
+  --tag-color: light-dark(#065f46, #d1fae5);
+  background-color: transparent !important;
+  color: var(--tag-color) !important;
+  border: 1px solid var(--tag-color) !important;
+  border-radius: 100px !important;
+  padding: 3px 9px !important;
+  line-height: 1 !important;
+}
+
+.special-tag.success:hover {
+  background-color: color-mix(in srgb, var(--tag-color) 20%, transparent) !important;
 }
 
 .special-tag.warning {
-  background-color: light-dark(#fef3c7, #92400e) !important;
-  color: light-dark(#92400e, #fef3c7) !important;
+  --tag-color: light-dark(#92400e, #fef3c7);
+  background-color: transparent !important;
+  color: var(--tag-color) !important;
+  border: 1px solid var(--tag-color) !important;
+  border-radius: 100px !important;
+  padding: 3px 9px !important;
+  line-height: 1 !important;
+}
+
+.special-tag.warning:hover {
+  background-color: color-mix(in srgb, var(--tag-color) 20%, transparent) !important;
 }
 
 .special-tag.error {
-  background-color: light-dark(#fee2e2, #991b1b) !important;
-  color: light-dark(#991b1b, #fee2e2) !important;
+  --tag-color: light-dark(#991b1b, #fee2e2);
+  background-color: transparent !important;
+  color: var(--tag-color) !important;
+  border: 1px solid var(--tag-color) !important;
+  border-radius: 100px !important;
+  padding: 3px 9px !important;
+  line-height: 1 !important;
+}
+
+.special-tag.error:hover {
+  background-color: color-mix(in srgb, var(--tag-color) 20%, transparent) !important;
 }
 
 .special-tag-ext-icon {
@@ -1278,12 +1299,12 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   display: inline;
   position: absolute;
   top: 24px;
-  padding: 5px;
-  color: #111;
-  background-color: #fff;
-  border: 1px solid #aaa;
-  box-shadow: 0 0 0 6px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
+  padding: 8px;
+  color: var(--layout-color-1);
+  background-color: var(--layout-background-0);
+  border: 1px solid var(--layout-border-0);
+  box-shadow: 0 10px 20px light-dark(rgba(0, 0, 0, 0.19), rgba(0, 0, 0, 0.38));
+  border-radius: 0;
   width: -moz-max-content;
   z-index: 1000;
 }
