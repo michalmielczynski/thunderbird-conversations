@@ -55,10 +55,10 @@
   --box-shadow-card-hover: var(--box-shadow-level-4);
   --box-shadow-popup: var(--box-shadow-level-3);
   
-  /* Border Radius System - Thunderbird prefers sharp corners */
-  --border-radius-small: 0;
-  --border-radius-medium: 0;
-  --border-radius-large: 0;
+  /* Border Radius System - Thunderbird uses subtle rounded corners */
+  --border-radius-small: 3px;
+  --border-radius-medium: 6px;
+  --border-radius-large: 8px;
   --border-radius-circle: 9999px;
   
   /* Enhanced Semantic Colors */
@@ -422,31 +422,33 @@ a img {
 
 #messageList {
   margin: 0;
-  padding: 8px;
-  background-color: var(--layout-background-0);
+  padding: 12px;
+  background-color: var(--tree-pane-background, var(--layout-background-1));
 }
 
 .message {
-  margin: 0 0 4px 0;
-  border: 1px solid var(--layout-border-0);
-  border-radius: 6px;
+  margin: 0 0 6px 0;
+  border: 1px solid var(--tree-card-border, var(--layout-border-0));
+  border-radius: var(--border-radius-medium, 8px);
   list-style-type: none;
-  background-color: var(--layout-background-0);
-  box-shadow: 0 1px 3px light-dark(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.12));
+  background-color: var(--tree-card-background, var(--layout-background-0));
+  box-shadow: var(--box-shadow-card);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   color: var(--layout-color-1);
+  padding: 0;
 }
 
 .message:hover {
-  background-color: var(--system-accent-subtle);
-  border-color: var(--system-accent-border);
+  background-color: var(--tree-card-background-current, color-mix(in srgb, AccentColor 5%, var(--layout-background-0)));
+  border-color: var(--list-container-border-hover, var(--system-accent-border));
   box-shadow: var(--box-shadow-card-hover);
 }
 
 .message:focus {
-  background-color: var(--system-accent-subtle);
-  border-color: var(--system-accent-color);
+  background-color: var(--tree-card-background-selected-current, color-mix(in srgb, AccentColor 8%, var(--layout-background-0)));
+  border-color: var(--indicator-border-selected, var(--system-accent-color));
+  box-shadow: var(--box-shadow-card-hover);
   outline: none;
 }
 
@@ -456,6 +458,24 @@ a img {
 
 .message:focus .messageHeader {
   border-bottom-color: transparent;
+}
+
+.message.selected {
+  background-color: var(--tree-card-background-selected-current, color-mix(in srgb, AccentColor 8%, var(--layout-background-0)));
+  border-color: var(--indicator-border-selected, var(--system-accent-color));
+  box-shadow: var(--box-shadow-card-hover);
+  position: relative;
+}
+
+.message.selected::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--indicator-width, 4px);
+  background-color: var(--indicator-background-selected, var(--system-accent-color));
+  border-radius: var(--border-radius-medium, 8px) 0 0 var(--border-radius-medium, 8px);
 }
 
 .messageHeader {
@@ -469,19 +489,21 @@ a img {
   gap: 12px;
   border: none;
   border-bottom: 1px solid var(--layout-border-0);
-  background-color: var(--layout-background-0);
-  border-radius: 6px 6px 0 0;
+  background-color: var(--tree-card-background, var(--layout-background-0));
+  border-radius: var(--border-radius-medium, 8px) var(--border-radius-medium, 8px) 0 0;
   color: var(--layout-color-1);
+  font-size: 12px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .messageHeader:hover {
-  background-color: var(--layout-background-1);
-  border-bottom-color: var(--border-color-interactive-hover);
+  background-color: var(--tree-card-background-current, color-mix(in srgb, AccentColor 5%, var(--layout-background-0)));
+  border-bottom-color: var(--list-container-border-hover, var(--system-accent-border));
 }
 
-/* For collapsed messages (not expanded), round all corners and remove border-bottom */
+/* For collapsed messages (not expanded), remove border-bottom */
 .message:not(:has(.messageHeader.expanded)) .messageHeader {
-  border-radius: 6px;
+  border-radius: var(--border-radius-medium, 8px);
   border-bottom: none;
 }
 
@@ -519,7 +541,7 @@ a img {
   font-weight: 600;
   margin-inline-end: 0.6rem;
   color: var(--layout-color-1);
-  font-size: 1rem;
+  font-size: 0.95rem;
   background-color: transparent;
   padding: 0;
   border-radius: 0;
@@ -536,7 +558,7 @@ a img {
 .to,
 .bzTo {
   color: var(--layout-color-2);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   background-color: transparent;
   padding: 0;
   border-radius: 0;
@@ -593,8 +615,9 @@ html[dir="rtl"] .tooltip {
   background-color: var(--layout-background-2);
   border-radius: 0;
   border: 1px solid var(--layout-border-0);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--layout-color-2);
+  opacity: 0.85;
   transition: all 0.15s ease;
 }
 
@@ -850,7 +873,7 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 .snippet {
   color: var(--layout-color-2);
   font-style: normal;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   line-height: 1.3;
   padding: 0;
   margin-top: 6px;

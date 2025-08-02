@@ -30,6 +30,8 @@ function Attachment({
   id,
 }) {
 
+  // Clean attachment name by removing any "< >" characters that might be added by various sources
+  const cleanName = name ? name.replace(/<\s*>/g, '').trim() : '';
 
   function preview(event) {
     event.preventDefault();
@@ -107,23 +109,26 @@ function Attachment({
   }
 
   // Helper function to determine file type icon based on content type
+  // Only uses icons that exist in material-icons.svg
   function getFileTypeIcon(contentType) {
     if (contentType.startsWith("image/")) {
-      return "image";
+      return "photo_library";
     } else if (contentType.startsWith("audio/")) {
-      return "audio_file";
+      return "whatshot"; // Using available icon as fallback
     } else if (contentType.startsWith("video/")) {
-      return "movie";
+      return "visibility"; // Using available icon as fallback
     } else if (contentType.includes("pdf")) {
-      return "picture_as_pdf";
+      return "print"; // Using print icon for PDFs
     } else if (contentType.includes("html") || contentType.includes("xml")) {
       return "code";
     } else if (contentType.includes("text/")) {
-      return "description";
-    } else if (contentType.includes("zip") || contentType.includes("compressed")) {
-      return "folder_zip";
+      return "list"; // Using list icon for text files
+    } else if (contentType.includes("zip") || contentType.includes("compressed") || contentType.includes("archive")) {
+      return "archive";
+    } else if (contentType.includes("word") || contentType.includes("document") || contentType.includes("officedocument")) {
+      return "save"; // Using save icon for office documents
     } else {
-      return "insert_drive_file";
+      return "attachment"; // Default fallback to attachment icon
     }
   }
 
@@ -147,7 +152,7 @@ function Attachment({
     React.createElement(
       "div",
       { className: "attachmentInfo" },
-      React.createElement("span", { className: "filename" }, name),
+      React.createElement("span", { className: "filename" }, cleanName),
       React.createElement("span", { className: "filesize" }, formattedSize)
     ),
     React.createElement(

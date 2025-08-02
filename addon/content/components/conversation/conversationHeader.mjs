@@ -208,7 +208,9 @@ class _ConversationHeader extends React.PureComponent {
           React.createElement(
             "button",
             {
-              className: "quickfilter-btn",
+              className: `quickfilter-btn ${
+                !this.areSomeMessagesCollapsed ? "active" : ""
+              }`,
               title: browser.i18n.getMessage("message.expand.tooltip"),
               onClick: this.expandCollapse,
             },
