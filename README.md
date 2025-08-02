@@ -17,6 +17,12 @@ This modernized version includes significant improvements over the original:
 - **Modern Design Language**: Card-based layouts with subtle shadows and smooth animations
 - **Reduced Complexity**: Removed legacy theming options that caused display issues
 
+### 🚀 Minor Version Update (v4.4.0)
+
+- Version bump to 4.4.0 for new minor release
+- Continued maintenance and stability improvements
+- Ready for next phase of development enhancements
+
 ### 🔧 Maintenance Update (v4.3.7)
 
 - Version synchronization fixes
