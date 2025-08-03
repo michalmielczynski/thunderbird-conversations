@@ -294,6 +294,14 @@ export function MessageHeaderOptions({
       React.createElement(
         "span",
         { className: "mainActionButton" },
+        // Show Reply button when there are multiple recipients or when it's the primary action
+        (multipleRecipients && !isDraft && !recipientsIncludeLists) &&
+          React.createElement(ActionButton, {
+            callback: replyAction,
+            className: "icon-link",
+            type: "reply",
+          }),
+        // Show the primary action button (Reply All, Reply List, Draft, or Reply for single recipient)
         React.createElement(ActionButton, {
           callback: replyAction,
           className: "icon-link",

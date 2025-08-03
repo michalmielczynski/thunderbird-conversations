@@ -550,6 +550,12 @@ a img {
   flex: 1;
 }
 
+.mainActionButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .mainActionButton > .icon-link,
 .dropDown > .icon-link,
 .attachmentsDropDown > .icon-link,
