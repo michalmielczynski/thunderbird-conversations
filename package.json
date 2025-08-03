@@ -1,16 +1,16 @@
 {
-  "version": "4.4.0",
+  "version": "4.4.1",
   "description": "Thunderbird Conversations",
   "note(description)": "This file is for build purposes only",
   "repository": {
     "type": "git",
-    "url": "git@github.com:thunderbird-conversations/thunderbird-conversations.git"
+    "url": "https://github.com/michalmielczynski/thunderbird-conversations"
   },
   "bugs": {
-    "url": "https://github.com/thunderbird-conversations/thunderbird-conversations/issues"
+    "url": "https://github.com/michalmielczynski/thunderbird-conversations/issues"
   },
   "engines": {
-    "thunderbird": ">=128.0a1"
+    "thunderbird": ">=140.0a1"
   },
   "private": true,
   "type": "module",
