@@ -229,7 +229,7 @@ class _ConversationHeader extends React.PureComponent {
               },
               React.createElement(SvgIcon, {
                 ariaHidden: true,
-                hash: "warning",
+                hash: "whatshot",
               })
             ),
           React.createElement(

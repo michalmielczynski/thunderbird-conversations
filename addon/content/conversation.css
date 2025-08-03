@@ -317,6 +317,48 @@ a img {
   flex: 1;
 }
 
+/* Native Thunderbird star button styling for message headers - match thread pane exactly */
+.messageHeader .button-star {
+  appearance: none;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  padding: 0;
+  margin-right: 4px;
+  margin-left: 0;
+  min-width: 16px;
+  min-height: 16px;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  cursor: default;
+  -moz-context-properties: fill, stroke;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.messageHeader .button-star.flagged {
+  background-image: url("chrome://messenger/skin/icons/new/compact/star.svg");
+  fill: var(--thread-pane-flag-fill, #fdba74);
+  stroke: var(--thread-pane-flag-stroke, #ea580c);
+  opacity: 0.7;
+}
+
+.messageHeader .button-star:hover.flagged {
+  fill: var(--thread-pane-flag-fill, #fb923c);
+  stroke: var(--thread-pane-flag-stroke, #f97316);
+  opacity: 1;
+}
+
+.messageHeader .button-star:focus-visible {
+  outline: 2px solid var(--focus-outline-color, Highlight);
+  outline-offset: -2px;
+}
+
+/* Hide the img element since we're using background-image */
+.messageHeader .button-star.flagged img {
+  display: none;
+}
+
 /* Native Thunderbird Quick Filter button styling */
 .actions .quickfilter-btn {
   --icon-size: 18px;

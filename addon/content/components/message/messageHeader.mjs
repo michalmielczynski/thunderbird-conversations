@@ -368,6 +368,20 @@ export function MessageHeader({
         React.createElement(
           "div",
           { className: "author-info" },
+          starred &&
+            React.createElement(
+              "button",
+              {
+                className: "button-star flagged",
+                "aria-label": browser.i18n.getMessage("message.starred.tooltip") || "Starred",
+                title: browser.i18n.getMessage("message.starred.tooltip") || "Starred",
+                tabIndex: -1,
+              },
+              React.createElement("img", {
+                src: "chrome://messenger/skin/icons/new/compact/star-filled.svg",
+                alt: "★",
+              })
+            ),
           !!from &&
             React.createElement(
               React.Fragment,
@@ -448,7 +462,20 @@ export function MessageHeader({
     React.createElement(
       "div",
       { className: "shrink-box" },
-      // Star button removed for clean interface
+      starred &&
+        React.createElement(
+          "button",
+          {
+            className: "button-star flagged",
+            "aria-label": browser.i18n.getMessage("message.starred.tooltip") || "Starred",
+            title: browser.i18n.getMessage("message.starred.tooltip") || "Starred",
+            tabIndex: -1,
+          },
+          React.createElement("img", {
+            src: "chrome://messenger/skin/icons/new/compact/star-filled.svg",
+            alt: "★",
+          })
+        ),
       !!from &&
         React.createElement(
           React.Fragment,
