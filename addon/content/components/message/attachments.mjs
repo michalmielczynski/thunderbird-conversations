@@ -188,13 +188,37 @@ function Attachment({
  * @param {number} options.id
  */
 export function Attachments({ dispatch, attachments, attachmentsPlural, id }) {
+  function downloadAllAttachments(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    dispatch(
+      attachmentActions.downloadAll({
+        id,
+      })
+    );
+  }
+
   return React.createElement(
     "ul",
     { className: "attachments" },
     attachments.length > 0 && React.createElement(
       "div",
       { className: "attachHeader" },
-      attachmentsPlural
+      React.createElement(
+        "span",
+        { className: "attachHeaderText" },
+        attachmentsPlural
+      ),
+      attachments.length > 1 && React.createElement(
+        "button",
+        {
+          className: "icon-link save-all-attachments",
+          title: browser.i18n.getMessage("attachments.downloadAll.tooltip"),
+          onClick: downloadAllAttachments,
+          type: "button",
+        },
+        React.createElement(SvgIcon, { hash: "file_download" })
+      )
     ),
     attachments.map((attachment) =>
       React.createElement(Attachment, {

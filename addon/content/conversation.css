@@ -1164,13 +1164,50 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 }
 
 .attachHeader {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding-top: 8px;
   margin-bottom: 8px;
   border-top: 1px solid var(--layout-border-0);
   font-weight: 600;
   color: var(--layout-color-1);
   font-size: 0.9rem;
+}
+
+.attachHeaderText {
+  flex: 1;
+}
+
+.save-all-attachments {
+  --icon-size: 16px;
+  padding: 4px;
+  margin-left: 8px;
+  border-radius: var(--button-border-radius);
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: var(--layout-color-2);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  min-width: 24px;
+  transition: all 0.15s ease;
+}
+
+.save-all-attachments:hover {
+  background-color: var(--button-background-color-hover);
+  color: var(--layout-color-1);
+}
+
+.save-all-attachments:active {
+  background-color: var(--button-background-color-active);
+}
+
+.save-all-attachments .icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
 }
 
 .attachment {
