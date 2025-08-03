@@ -129,24 +129,11 @@ export class Window {
   }
 
   async doubleClickHandler(tabId, msgHdrs) {
-    for (const hdr of msgHdrs) {
-      if (hdr.folder.type == "drafts" || hdr.folder.type == "templates") {
-        return {};
-      }
-      const account = await browser.accounts.get(hdr.folder.accountId);
-      if (account.type == "nntp" || account.type == "rss") {
-        return {};
-      }
-    }
-    const urls = [];
-    for (const hdr of msgHdrs) {
-      urls.push(await browser.conversations.getMessageUriForId(hdr.id));
-    }
-
-    let windowId = (await browser.tabs.get(tabId)).windowId;
-    await this.openConversation(windowId, urls);
+    // Don't override default behavior - let Thunderbird handle double-click
+    // This allows the built-in message reader to open instead of forcing
+    // the conversation view in a new tab/window
     return {
-      cancel: true,
+      cancel: false,
     };
   }
 
