@@ -2,9 +2,11 @@
 
 ## ✅ Completed Changes
 
-### 1. **Removed Star/Favorite Feature** 
-- Completely removed star button creation in `messageHeader.mjs`
-- Cleaned up all star-related styling rules
+### 1. **Restored Star/Favorite Feature**
+- Re-implemented clickable star functionality in `messageHeader.mjs`
+- Added proper styling for both starred (golden) and unstarred (greyed out) states
+- Star button prevents event propagation to avoid expanding messages when clicked
+- Uses existing `setStarred` action from message reducer
 
 ### 2. **Eliminated Custom Theme System**
 - Removed `tweak_chrome` and `tweak_bodies` options entirely
@@ -177,3 +179,14 @@
 ---
 
 **Status**: ✅ **WIP**
+
+## 🔧 Development Notes
+
+**Important:** This is a privileged Thunderbird add-on that requires Thunderbird to run properly.
+
+- **Do not run** `npm start`, `npm run dev`, or test commands - they will fail
+- Use `npm run build` to build the extension for testing
+- Testing must be done by loading the extension in Thunderbird directly
+- The extension uses experimental APIs that require privileged add-on status
+
+---

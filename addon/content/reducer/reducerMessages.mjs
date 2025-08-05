@@ -163,12 +163,20 @@ export const messageActions = {
     };
   },
   setStarred({ id, starred }) {
-    return async () => {
+    return async (dispatch) => {
+      // Update local state immediately for responsive UI
+      dispatch(messagesSlice.actions.setStarredLocal({ id, starred }));
+      
+      // Then sync with browser API
       browser.messages
         .update(id, {
           flagged: starred,
         })
-        .catch(console.error);
+        .catch((error) => {
+          console.error("Failed to update star state:", error);
+          // Revert local state on error
+          dispatch(messagesSlice.actions.setStarredLocal({ id, starred: !starred }));
+        });
     };
   },
   expandMsg({ id, expand }) {
@@ -650,6 +658,12 @@ export const messagesSlice = RTK.createSlice({
       return modifyOnlyMsg(state, payload.id, (msg) => ({
         ...msg,
         hasReadReceiptRequest: false,
+      }));
+    },
+    setStarredLocal(state, { payload }) {
+      return modifyOnlyMsg(state, payload.id, (msg) => ({
+        ...msg,
+        starred: payload.starred,
       }));
     },
   },

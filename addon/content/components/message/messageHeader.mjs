@@ -313,6 +313,16 @@ export function MessageHeader({
     );
   }
 
+  function onClickStar(event) {
+    event.stopPropagation();
+    dispatch(
+      messageActions.setStarred({
+        id,
+        starred: !starred,
+      })
+    );
+  }
+
   // TODO: Maybe insert this after contacts but before snippet:
   // <span class="bzTo"> {{str "message.at"}} {{bugzillaUrl}}</span>
 
@@ -368,20 +378,26 @@ export function MessageHeader({
         React.createElement(
           "div",
           { className: "author-info" },
-          starred &&
-            React.createElement(
-              "button",
-              {
-                className: "button-star flagged",
-                "aria-label": browser.i18n.getMessage("message.starred.tooltip") || "Starred",
-                title: browser.i18n.getMessage("message.starred.tooltip") || "Starred",
-                tabIndex: -1,
-              },
-              React.createElement("img", {
-                src: "chrome://messenger/skin/icons/new/compact/star-filled.svg",
-                alt: "★",
-              })
-            ),
+          React.createElement(
+            "button",
+            {
+              className: starred ? "button-star flagged" : "button-star",
+              "aria-label": starred
+                ? (browser.i18n.getMessage("message.removeStar.tooltip") || "Remove Star")
+                : (browser.i18n.getMessage("message.addStar.tooltip") || "Add Star"),
+              title: starred
+                ? (browser.i18n.getMessage("message.removeStar.tooltip") || "Remove Star")
+                : (browser.i18n.getMessage("message.addStar.tooltip") || "Add Star"),
+              onClick: onClickStar,
+              tabIndex: 0,
+            },
+            React.createElement("img", {
+              src: starred
+                ? "chrome://messenger/skin/icons/new/compact/star-filled.svg"
+                : "chrome://messenger/skin/icons/new/compact/star.svg",
+              alt: starred ? "★" : "☆",
+            })
+          ),
           !!from &&
             React.createElement(
               React.Fragment,
@@ -462,20 +478,26 @@ export function MessageHeader({
     React.createElement(
       "div",
       { className: "shrink-box" },
-      starred &&
-        React.createElement(
-          "button",
-          {
-            className: "button-star flagged",
-            "aria-label": browser.i18n.getMessage("message.starred.tooltip") || "Starred",
-            title: browser.i18n.getMessage("message.starred.tooltip") || "Starred",
-            tabIndex: -1,
-          },
-          React.createElement("img", {
-            src: "chrome://messenger/skin/icons/new/compact/star-filled.svg",
-            alt: "★",
-          })
-        ),
+      React.createElement(
+        "button",
+        {
+          className: starred ? "button-star flagged" : "button-star",
+          "aria-label": starred
+            ? (browser.i18n.getMessage("message.removeStar.tooltip") || "Remove Star")
+            : (browser.i18n.getMessage("message.addStar.tooltip") || "Add Star"),
+          title: starred
+            ? (browser.i18n.getMessage("message.removeStar.tooltip") || "Remove Star")
+            : (browser.i18n.getMessage("message.addStar.tooltip") || "Add Star"),
+          onClick: onClickStar,
+          tabIndex: 0,
+        },
+        React.createElement("img", {
+          src: starred
+            ? "chrome://messenger/skin/icons/new/compact/star-filled.svg"
+            : "chrome://messenger/skin/icons/new/compact/star.svg",
+          alt: starred ? "★" : "☆",
+        })
+      ),
       !!from &&
         React.createElement(
           React.Fragment,

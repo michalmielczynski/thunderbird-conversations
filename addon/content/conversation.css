@@ -330,10 +330,26 @@ a img {
   width: 16px;
   height: 16px;
   display: inline-block;
-  cursor: default;
+  cursor: pointer;
   -moz-context-properties: fill, stroke;
   flex-shrink: 0;
   vertical-align: middle;
+  background-image: url("chrome://messenger/skin/icons/new/compact/star.svg");
+  fill: var(--color-gray-50, #9ca3af);
+  stroke: var(--color-gray-40, #6b7280);
+  opacity: 0.5;
+  transition: fill 0.2s ease, stroke 0.2s ease, opacity 0.2s ease, transform 0.1s ease;
+}
+
+.messageHeader .button-star:hover {
+  fill: var(--color-gray-60, #4b5563);
+  stroke: var(--color-gray-50, #374151);
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+
+.messageHeader .button-star:active {
+  transform: scale(0.95);
 }
 
 .messageHeader .button-star.flagged {
