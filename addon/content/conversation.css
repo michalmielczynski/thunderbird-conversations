@@ -491,7 +491,7 @@ a img {
   list-style-type: none;
   background-color: var(--tree-card-background, var(--layout-background-0));
   box-shadow: var(--box-shadow-card);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   color: var(--layout-color-1);
   padding: 0;
@@ -499,7 +499,7 @@ a img {
 
 .message:hover {
   background-color: var(--tree-card-background-current, color-mix(in srgb, AccentColor 5%, var(--layout-background-0)));
-  border-color: var(--list-container-border-hover, var(--system-accent-border));
+  border-color: var(--system-accent-color);
   box-shadow: var(--box-shadow-card-hover);
 }
 
@@ -551,12 +551,12 @@ a img {
   border-radius: var(--border-radius-medium, 8px) var(--border-radius-medium, 8px) 0 0;
   color: var(--layout-color-1);
   font-size: 12px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .messageHeader:hover {
   background-color: var(--tree-card-background-current, color-mix(in srgb, AccentColor 5%, var(--layout-background-0)));
-  border-bottom-color: var(--list-container-border-hover, var(--system-accent-border));
+  border-bottom-color: var(--system-accent-color);
 }
 
 /* For collapsed messages (not expanded), remove border-bottom */
