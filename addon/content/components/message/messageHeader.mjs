@@ -337,7 +337,11 @@ export function MessageHeader({
     extraContacts = React.createElement(
       React.Fragment,
       null,
-      browser.i18n.getMessage("header.to") + " ",
+      React.createElement(
+        "span",
+        { className: "to-label" },
+        browser.i18n.getMessage("header.to") + " "
+      ),
       new Intl.ListFormat(locale, { style: "long", type: "conjunction" })
         .formatToParts(allToMap.keys())
         .map((item, i) => {
@@ -355,8 +359,7 @@ export function MessageHeader({
             key: item.value,
             msgId: id,
           });
-        }),
-      " "
+        })
     );
   }
   if (!expanded) {
@@ -468,56 +471,56 @@ export function MessageHeader({
     );
   }
 
-  // For expanded messages, keep the original layout
+  // For expanded messages, use a layout similar to collapsed but with more space
   return React.createElement(
     "div",
     {
-      className: `messageHeader hbox ${expanded ? "expanded" : ""}`,
+      className: `messageHeader expanded-two-row ${expanded ? "expanded" : ""}`,
       onClick: onClickHeader,
     },
+    // Row 1: Author info, tags, and date/options
     React.createElement(
       "div",
-      { className: "shrink-box" },
+      { className: "header-row-1" },
       React.createElement(
-        "button",
-        {
-          className: starred ? "button-star flagged" : "button-star",
-          "aria-label": starred
-            ? (browser.i18n.getMessage("message.removeStar.tooltip") || "Remove Star")
-            : (browser.i18n.getMessage("message.addStar.tooltip") || "Add Star"),
-          title: starred
-            ? (browser.i18n.getMessage("message.removeStar.tooltip") || "Remove Star")
-            : (browser.i18n.getMessage("message.addStar.tooltip") || "Add Star"),
-          onClick: onClickStar,
-          tabIndex: 0,
-        },
-        React.createElement("img", {
-          src: starred
-            ? "chrome://messenger/skin/icons/new/compact/star-filled.svg"
-            : "chrome://messenger/skin/icons/new/compact/star.svg",
-          alt: starred ? "★" : "☆",
-        })
-      ),
-      !!from &&
+        "div",
+        { className: "author-info-expanded" },
         React.createElement(
-          React.Fragment,
-          null,
-          React.createElement(Avatar, {
-            url: from.avatar,
-            style: from.colorStyle,
-            initials: from.initials,
-          }),
-          " ",
-          React.createElement(ContactLabel, {
-            className: "author",
-            contact: from,
-            msgId: id,
+          "button",
+          {
+            className: starred ? "button-star flagged" : "button-star",
+            "aria-label": starred
+              ? (browser.i18n.getMessage("message.removeStar.tooltip") || "Remove Star")
+              : (browser.i18n.getMessage("message.addStar.tooltip") || "Add Star"),
+            title: starred
+              ? (browser.i18n.getMessage("message.removeStar.tooltip") || "Remove Star")
+              : (browser.i18n.getMessage("message.addStar.tooltip") || "Add Star"),
+            onClick: onClickStar,
+            tabIndex: 0,
+          },
+          React.createElement("img", {
+            src: starred
+              ? "chrome://messenger/skin/icons/new/compact/star-filled.svg"
+              : "chrome://messenger/skin/icons/new/compact/star.svg",
+            alt: starred ? "★" : "☆",
           })
         ),
-      extraContacts,
-      React.createElement(
-        "span",
-        { className: "snippet" },
+        !!from &&
+          React.createElement(
+            React.Fragment,
+            null,
+            React.createElement(Avatar, {
+              url: from.avatar,
+              style: from.colorStyle,
+              initials: from.initials,
+            }),
+            " ",
+            React.createElement(ContactLabel, {
+              className: "author",
+              contact: from,
+              msgId: id,
+            })
+          ),
         React.createElement(MessageTags, {
           onTagsChange: (newTags) => {
             dispatch(
@@ -543,22 +546,27 @@ export function MessageHeader({
           folderName: shortFolderName,
           inView,
           specialTags,
-        }),
-        !expanded && snippet
-      )
+        })
+      ),
+      React.createElement(MessageHeaderOptions, {
+        dispatch,
+        overrideDarkMode,
+        date,
+        detailsShowing,
+        expanded,
+        fullDate,
+        id,
+        attachments,
+        multipleRecipients,
+        recipientsIncludeLists,
+        isDraft,
+      })
     ),
-    React.createElement(MessageHeaderOptions, {
-      dispatch,
-      overrideDarkMode,
-      date,
-      detailsShowing,
-      expanded,
-      fullDate,
-      id,
-      attachments,
-      multipleRecipients,
-      recipientsIncludeLists,
-      isDraft,
-    })
+    // Row 2: Recipients info
+    extraContacts && React.createElement(
+      "div",
+      { className: "header-row-2" },
+      extraContacts
+    )
   );
 }

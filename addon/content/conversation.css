@@ -160,6 +160,14 @@ body {
 
 html {
   font-size: 100%;
+  scroll-behavior: smooth;
+}
+
+/* Respect reduced motion preference for scrolling */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 p {
@@ -205,6 +213,10 @@ a img {
   -moz-context-properties: fill, stroke;
   fill: color-mix(in srgb, currentColor 20%, transparent);
   stroke: currentColor;
+  transition:
+    fill 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    stroke 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .icon.active {
   fill: color-mix(in srgb, var(--selected-item-color, #0060df) 20%, transparent);
@@ -221,20 +233,24 @@ a img {
   border: none;
   background: var(--button-background-color-ghost);
   cursor: pointer;
-  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    color 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    background-color 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.12s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   min-width: var(--button-size-icon);
   min-height: var(--button-size-icon);
+  will-change: transform;
 }
 
 .icon-link:focus,
 .icon-link:hover {
   color: var(--layout-color-1);
   background-color: var(--button-background-color-ghost-hover);
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.02);
 }
 
 .icon-link:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.98);
   background-color: var(--button-background-color-ghost-active);
 }
 
@@ -338,7 +354,12 @@ a img {
   fill: var(--color-gray-50, #9ca3af);
   stroke: var(--color-gray-40, #6b7280);
   opacity: 0.5;
-  transition: fill 0.2s ease, stroke 0.2s ease, opacity 0.2s ease, transform 0.1s ease;
+  transition:
+    fill 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    stroke 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
 }
 
 .messageHeader .button-star:hover {
@@ -467,6 +488,16 @@ a img {
 .actions .expand {
   /* relatively scale arrow to match with other icons */
   transform: scale(1.6, 1.6);
+  transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.actions .expand:hover {
+  transform: scale(1.7, 1.7);
+}
+
+.actions .expand:active {
+  transform: scale(1.5, 1.5);
 }
 
 .expand .expand-less,
@@ -476,6 +507,16 @@ a img {
 
 .expand.collapse .expand-less {
   display: initial;
+}
+
+/* Smooth rotation animation for expand/collapse icons */
+.expand .icon {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center;
+}
+
+.expand.collapse .icon {
+  transform: rotate(180deg);
 }
 
 #messageList {
@@ -491,10 +532,15 @@ a img {
   list-style-type: none;
   background-color: var(--tree-card-background, var(--layout-background-0));
   box-shadow: var(--box-shadow-card);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    background-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   overflow: hidden;
   color: var(--layout-color-1);
   padding: 0;
+  will-change: transform;
 }
 
 .message:hover {
@@ -551,7 +597,12 @@ a img {
   border-radius: var(--border-radius-medium, 8px) var(--border-radius-medium, 8px) 0 0;
   color: var(--layout-color-1);
   font-size: 12px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    background-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-bottom-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-radius 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: background-color, border-radius;
 }
 
 .messageHeader:hover {
@@ -606,6 +657,62 @@ a img {
   line-height: 1.3;
   color: var(--layout-color-2);
   flex: 1;
+}
+
+/* Two-row layout for expanded messages - similar to collapsed but with more space */
+.messageHeader.expanded-two-row {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 12px 16px;
+  min-height: auto;
+}
+
+.messageHeader.expanded-two-row .header-row-1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.messageHeader.expanded-two-row .author-info-expanded {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  /* Allow wrapping for long names and ensure tags are visible */
+  flex-wrap: wrap;
+}
+
+.messageHeader.expanded-two-row .header-row-2 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding-left: 32px; /* Align with author text, accounting for avatar */
+  font-size: 0.9rem;
+  color: var(--layout-color-2);
+}
+
+/* Ensure contact names can wrap in expanded view */
+.messageHeader.expanded-two-row .author-info-expanded .contactName {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Make sure tags are visible in expanded view */
+.messageHeader.expanded-two-row .author-info-expanded .messageTags,
+.messageHeader.expanded-two-row .author-info-expanded .specialMessageTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* Ensure proper spacing for the "to" label */
+.messageHeader.expanded-two-row .header-row-2 .to-label {
+  margin-right: 4px;
 }
 
 .mainActionButton {
@@ -881,8 +988,11 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   letter-spacing: 0.5px;
   border: 1px solid light-dark(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
   box-shadow: 0 1px 2px light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
-  transition: all 0.15s ease;
+  transition:
+    transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  will-change: transform;
 }
 
 .contactInitials:hover,
@@ -1005,11 +1115,42 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   color: var(--layout-color-1);
   background: var(--layout-background-0);
   border-radius: 0 0 6px 6px;
+  transition:
+    opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    max-height 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    padding 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: top;
+  will-change: opacity, transform, max-height;
+  overflow: hidden;
 }
 
-/* Hide messageBody for collapsed messages */
+/* Default collapsed state - smooth collapse animation */
 .message:not(:has(.messageHeader.expanded)) .messageBody {
-  display: none;
+  max-height: 0 !important;
+  opacity: 0 !important;
+  transform: translateY(-12px) scaleY(0.9) !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  pointer-events: none !important;
+  transition:
+    opacity 0.25s cubic-bezier(0.4, 0, 0.6, 1),
+    transform 0.25s cubic-bezier(0.4, 0, 0.6, 1),
+    max-height 0.3s cubic-bezier(0.4, 0, 0.6, 1),
+    padding 0.25s cubic-bezier(0.4, 0, 0.6, 1) !important;
+}
+
+/* Expanded state - smooth expand animation */
+.message:has(.messageHeader.expanded) .messageBody {
+  max-height: 2000px !important;
+  opacity: 1 !important;
+  transform: translateY(0) scaleY(1) !important;
+  pointer-events: auto !important;
+  transition:
+    opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    max-height 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    padding 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
 }
 
 .message.with-details .messageBody {
@@ -1403,6 +1544,53 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   display: none;
 }
 
+/* Performance optimization for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .message .messageBody {
+    transition: opacity 0.01ms !important;
+  }
+  
+  .messageHeader {
+    transition: background-color 0.01ms !important;
+  }
+  
+  .icon-link:hover,
+  .icon-link:focus {
+    transform: none !important;
+  }
+  
+  .contactInitials:hover,
+  .contactAvatar:hover {
+    transform: none !important;
+  }
+  
+  .messageHeader .button-star:hover {
+    transform: none !important;
+  }
+  
+  .actions .expand:hover {
+    transform: scale(1.6, 1.6) !important;
+  }
+}
+
+/* Smooth transitions for quote and signature toggles */
+.showhidequote.icon-link,
+.showhidesig.icon-link {
+  transition:
+    background-color 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    color 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
 /* General pills - Native Thunderbird pattern */
 .special-tag.success {
   --tag-color: light-dark(#065f46, #d1fae5);
@@ -1496,8 +1684,10 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
   left: 0;
   pointer-events: auto;
   transition:
-    visibility 800ms,
-    opacity 800ms;
+    visibility 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateY(-8px);
   /* make sure the popup is in the foreground */
   z-index: 100;
   /* 7px for .arrow, plus 2px for borders */
@@ -1510,6 +1700,7 @@ html[dir="rtl"] .attachmentsDropDown .arrow {
 .fade-popup:focus-within {
   opacity: 1;
   visibility: visible;
+  transform: translateY(0);
 }
 #popup-container {
   width: 100%;

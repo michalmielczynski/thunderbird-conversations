@@ -78,10 +78,11 @@ export class Message extends React.PureComponent {
       this.lastScrolledId = this.props.message.id;
       // The header is 44px high (yes, this is hard coded and ugly).
       window.requestAnimationFrame(() => {
-        window.scrollTo(
-          0,
-          this.li.getBoundingClientRect().top + window.scrollY + 5 - 44
-        );
+        window.scrollTo({
+          top: this.li.getBoundingClientRect().top + window.scrollY + 5 - 44,
+          left: 0,
+          behavior: 'smooth'
+        });
         this.onSelected();
       });
       // For any time we're mounting a new message, we're going to be loading
@@ -105,16 +106,15 @@ export class Message extends React.PureComponent {
       (prevProps.iframesLoading && !this.props.iframesLoading)
     ) {
       this.lastScrolledId = this.props.message.id;
-      // The additional setTimeout gives slightly longer for the event queue
-      // to flush, and the message body to finish displaying - this helps the
-      // conversation-in-tab view to scroll properly.
+      // Wait for expand animation to complete before scrolling (350ms for expand animation + buffer)
+      const scrollDelay = this.props.message.expanded && !prevProps.message.expanded ? 400 : 100;
       setTimeout(() => {
         window.requestAnimationFrame(() => {
-          window.scrollTo(
-            0,
-            // The header is 44px high (yes, this is hardcoded and ugly).
-            this.li.getBoundingClientRect().top + window.scrollY + 5 - 44
-          );
+          window.scrollTo({
+            top: this.li.getBoundingClientRect().top + window.scrollY + 5 - 44,
+            left: 0,
+            behavior: 'smooth'
+          });
           this.onSelected();
           // Only clear scrollTo if we're now not loading any iframes for
           // this message. This should generally mean we get to scroll to the

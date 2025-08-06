@@ -222,9 +222,18 @@ export class MessageEnricher {
    *   The value of the expandWho preference.
    */
   _expandAndScroll(msgData, selectedMessages, expandWho) {
+    // First, determine which messages should be expanded
     let focusThis = this._whereToScroll(msgData, selectedMessages);
-    msgData[focusThis].scrollTo = true;
     this._markMsgsToExpand(msgData, selectedMessages, focusThis, expandWho);
+    
+    // Then, find the first expanded message and scroll to it for optimal reading
+    let scrollTarget = this._findFirstExpandedMessage(msgData);
+    if (scrollTarget >= 0) {
+      msgData[scrollTarget].scrollTo = true;
+    } else {
+      // Fallback: if no messages are expanded, scroll to the focus target
+      msgData[focusThis].scrollTo = true;
+    }
   }
 
   /**
@@ -266,6 +275,24 @@ export class MessageEnricher {
       }
     }
     return needsScroll;
+  }
+
+  /**
+   * Find the first expanded message in the message data array.
+   * This is used to determine the optimal scroll target for reading.
+   *
+   * @param {object[]} msgData
+   *   The message details array.
+   * @returns {number}
+   *   The index of the first expanded message, or -1 if none found.
+   */
+  _findFirstExpandedMessage(msgData) {
+    for (let i = 0; i < msgData.length; i++) {
+      if (msgData[i].expanded) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   /**
